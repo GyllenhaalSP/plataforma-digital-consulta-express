@@ -4,7 +4,7 @@ import {AuthService} from '../auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 
-function dniValidator(): ValidatorFn {
+export function dniValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
         const value = control.value;
         const dniRegex = /^[XYZ]?\d{5,8}[A-Z]$/i;
@@ -16,7 +16,7 @@ function dniValidator(): ValidatorFn {
 function checkDniLetter(dni: string): boolean {
     const letterValue = parseInt(dni.substring(0, dni.length - 1)) % 23;
     const letter = 'TRWAGMYFPDXBNJZSQVHLCKET'[letterValue];
-    return dni.endsWith(letter);
+    return dni.endsWith(letter) || dni.endsWith(letter.toLowerCase());
 }
 
 function passwordsMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {

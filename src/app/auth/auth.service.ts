@@ -16,15 +16,10 @@ export class AuthService {
         return this.http.post(`${this.apiUrl}/register`, userData);
     }
 
-    login(credentials: { username: string, password: string }): Observable<any> {
-        return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
-            tap(_ => console.log('login successful')),
-            catchError(error => {
-                console.error('login error', error);
-                return of(null);
-            })
-        );
+    login(userData: any) {
+        return this.http.post(`${this.apiUrl}/login`, userData);
     }
+
 
     // Implementa más funciones según sea necesario, como registro, logout, etc.
     isLoggedIn() {

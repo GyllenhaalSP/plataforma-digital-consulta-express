@@ -6,5 +6,5 @@ import {Component} from '@angular/core';
     styleUrl: './app.component.scss'
 })
 export class AppComponent {
-    title = 'plataforma-digital-consulta-express';
+    title = 'Plataforma Digital de Consulta';
 }
