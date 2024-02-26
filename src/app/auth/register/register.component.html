@@ -1,4 +1,4 @@
-<div class="max-w-md mx-auto my-10 p-8 border rounded shadow">
+<div class="max-w-md mx-auto my-10 p-8 border rounded shadow bg-gray-400 border-black">
     <form (ngSubmit)="onRegister()" [formGroup]="registerForm" class="space-y-6">
         <h1 class="text-center text-3xl font-bold text-gray-900">Registro</h1>
         <p class="text-sm text-gray-600">Por favor, rellena el siguiente formulario para registrarte.</p>
@@ -9,14 +9,14 @@
             <label class="block text-sm font-medium text-gray-700" for="dni">DNI:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="dni" id="dni" placeholder="DNI/NIF"
+                formControlName="dni" id="dni" placeholder=" 12345678Z"
                 type="text">
             @if (registerForm.get('dni')?.errors?.['required'] && registerForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo DNI/NIF es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo DNI/NIF es obligatorio</div>
             } @else if (registerForm.get('dni')?.errors?.['invalidDni'] && registerForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</p>
-                <p class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</p>
-                <p class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</p>
+                <div class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</div>
+                <div class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</div>
+                <div class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</div>
             }
         </div>
 
@@ -25,12 +25,12 @@
             <label class="block text-sm font-medium text-gray-700" for="nombre">Nombre:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="nombre" id="nombre" placeholder="Nombre"
+                formControlName="nombre" id="nombre" placeholder=" Pepe"
                 type="text">
             @if (registerForm.get('nombre')?.errors?.['required'] && registerForm.get('nombre')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo nombre es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo nombre es obligatorio</div>
             } @else if (registerForm.get('nombre')?.errors?.['minlength'] && registerForm.get('nombre')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo nombre debe tener al menos 3 caracteres</p>
+                <div class="mt-2 text-sm text-red-600">El campo nombre debe tener al menos 3 caracteres</div>
             }
         </div>
 
@@ -39,12 +39,12 @@
             <label class="block text-sm font-medium text-gray-700" for="apellidos">Apellidos:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="apellidos" id="apellidos" placeholder="Apellidos"
+                formControlName="apellidos" id="apellidos" placeholder=" Pérez Martín"
                 type="text">
             @if (registerForm.get('apellidos')?.errors?.['required'] && registerForm.get('apellidos')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo apellidos es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo apellidos es obligatorio</div>
             } @else if (registerForm.get('apellidos')?.errors?.['minlength'] && registerForm.get('apellidos')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo apellidos debe tener al menos 3 caracteres</p>
+                <div class="mt-2 text-sm text-red-600">El campo apellidos debe tener al menos 3 caracteres</div>
             }
         </div>
 
@@ -53,12 +53,12 @@
             <label class="block text-sm font-medium text-gray-700" for="email">Correo electrónico:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="email" id="email" placeholder="Correo electrónico"
+                formControlName="email" id="email" placeholder=" peperezmamartin123@gmail.com"
                 type="email">
             @if (registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo email es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo email es obligatorio</div>
             } @else if (registerForm.get('email')?.errors?.['email'] && registerForm.get('email')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El email introducido no es válido</p>
+                <div class="mt-2 text-sm text-red-600">El email introducido no es válido</div>
             }
         </div>
 
@@ -67,12 +67,12 @@
             <label class="block text-sm font-medium text-gray-700" for="password">Contraseña:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="password" id="password" placeholder="Contraseña"
+                formControlName="password" id="password" placeholder=" Pepe1234"
                 type="password">
             @if (registerForm.get('password')?.errors?.['required'] && registerForm.get('password')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo contraseña es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo contraseña es obligatorio</div>
             } @else if (registerForm.get('password')?.errors?.['minlength'] && registerForm.get('password')?.touched) {
-                <p class="mt-2 text-sm text-red-600">La contraseña debe tener al menos 8 caracteres</p>
+                <div class="mt-2 text-sm text-red-600">La contraseña debe tener al menos 8 caracteres</div>
             }
         </div>
 
@@ -82,14 +82,14 @@
                                                                                             contraseña:</label>
             <input
                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                formControlName="passwordValidation" id="passwordValidation" placeholder="Repite la contraseña"
+                formControlName="passwordValidation" id="passwordValidation" placeholder=" Pepe1234"
                 type="password">
             @if (registerForm.get('passwordValidation')?.errors?.['required'] && registerForm.get('passwordValidation')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo repetir contraseña es obligatorio</p>
+                <div class="mt-2 text-sm text-red-600">El campo repetir contraseña es obligatorio</div>
             } @else if (registerForm.get('passwordValidation')?.errors?.['minlength'] && registerForm.get('passwordValidation')?.touched) {
-                <p class="mt-2 text-sm text-red-600">La contraseña debe tener al menos 8 caracteres</p>
+                <div class="mt-2 text-sm text-red-600">La contraseña debe tener al menos 8 caracteres</div>
             } @else if (registerForm.errors?.['passwordsMismatch']) {
-                <p class="mt-2 text-sm text-red-600">Las contraseñas no coinciden</p>
+                <div class="mt-2 text-sm text-red-600">Las contraseñas no coinciden</div>
             }
         </div>
 
@@ -99,6 +99,7 @@
             Registro
         </button>
     </form>
+    <br>
     <p class="mt-4 text-center text-sm text-gray-600">¿Ya tienes una cuenta? <a
         class="font-medium text-indigo-600 hover:text-indigo-500"
         routerLink="/login">Inicia

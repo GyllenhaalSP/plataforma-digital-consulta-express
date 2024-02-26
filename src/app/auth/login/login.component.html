@@ -1,25 +1,24 @@
-<div class="login-container max-w-md mx-auto my-10 p-8 border rounded shadow">
+<div class="login-container max-w-md mx-auto my-10 p-8 border rounded shadow bg-gray-400 border-black">
     <form (ngSubmit)="login()" [formGroup]="loginForm" class="space-y-6" novalidate>
-        <h2 class="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>
+        <h1 class="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h1>
 
         <div class="form-group">
             <label class="block text-sm font-medium text-gray-700" for="dni">DNI/NIF:</label>
-            <input class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="dni" id="dni" placeholder="DNI"
+            <input class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="dni" id="dni" placeholder=" Z12345678"
                    type="text">
             @if (loginForm.get('dni')?.errors?.['required'] && loginForm.get('dni')?.touched) {
                 <div class="mt-2 text-sm text-red-600">
                     El DNI/NIF es obligatorio.
                 </div>
             } @else if (loginForm.get('dni')?.errors?.['invalidDni'] && loginForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</p>
-                <p class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</p>
-                <p class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</p>
+                <div class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</div>
+                <div class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</div>
+                <div class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</div>
             }
         </div>
-
         <div class="form-group">
             <label class="block text-sm font-medium text-gray-700" for="password">Contraseña:</label>
-            <input class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="password" id="password" placeholder="Contraseña"
+            <input class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="password" id="password" placeholder=" Pepe1234"
                    type="password">
             @if (loginForm.get('password')?.errors?.['required'] && loginForm.get('password')?.touched) {
                 <div class="mt-2 text-sm text-red-600">
@@ -33,6 +32,7 @@
             Iniciar sesión
         </button>
     </form>
+    <br>
     <p class="mt-4 text-center text-sm text-gray-600">
         ¿No tienes una cuenta? <a class="font-medium text-indigo-600 hover:text-indigo-500" routerLink="/registro">Regístrate
                                                                                                                    aquí</a>

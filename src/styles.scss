@@ -2,5 +2,21 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: lightgray;
+}
+
+hr {
+    height: 4px;
+    width: 50%;
+    background-color: gray;
+    border-color: lightgray;
+    border-radius: 50%;
+    margin-left: 25%;
+}
