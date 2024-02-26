@@ -3,16 +3,31 @@
 @if (!authService.isLoggedIn()){
     <p>Por favor, <a routerLink="/register">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
 } @else {
-    <div class="flex place-content-end mr-5">
+    <div class="flex place-content-end mr-5 text-[24px]">
         <p>Bienvenido, {{ authService.getUserData('nombre')}}</p>
     </div>
+    @if (authService.getUserData('role') === 'admin'){
+        <p>Como administrador, puedes <a routerLink="/admin">acceder al panel de administración</a>.</p>
+    }
 }
 
 <h1>
-    Bienvenido a la {{ title }}
+    {{ title }}
 </h1>
 
-<hr><br>
+<hr class="mb-5">
+
+@if (authService.getUserData('role') === 'user'){
+    <p>Como usuario, puedes <a routerLink="/user">acceder al panel de usuario</a>.</p>
+}@else if (authService.getUserData('role') === 'promotor'){
+    <p>Como promotor, puedes <a routerLink="/promotor">acceder al panel de promotor</a>.</p>
+}@else if (authService.getUserData('role') === 'entidad'){
+    <div class="text-[16px]">
+        <p>Bienvenido a la página principal de las Entidades de la Plataforma Digital de Consulta Express.</p>
+        <p>Como entidad puedes acceder a los datos que figuren bajo tu dominio siguiendo los links de la barra de navegación superior.</p>
+        <p>Si tienes alguna duda o necesitas ayuda, por favor, contacta con el administrador de la plataforma.</p>
+    </div>
+}
 
 <router-outlet></router-outlet>
 

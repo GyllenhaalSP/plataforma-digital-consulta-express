@@ -1,0 +1,28 @@
+<div class="container mt-4">
+    <h2>Servicio de consulta de aportaciones</h2>
+    <h3>Aportaciones en {{authService.getUserData("nombre")}}</h3>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Promotor</th>
+            <th>Entidad Financiera</th>
+            <th>Cantidad Total</th>
+            <th>Mes de la Aportación</th>
+            <th>Aportaciones Mensuales</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let aportacion of aportaciones">
+                <td>{{ aportacion.nombre }}</td>
+                <td>{{ aportacion.apellidos }}</td>
+                <td>{{ aportacion.promotor }}</td>
+                <td>{{ aportacion.entidadFinanciera }}</td>
+                <td>{{ aportacion.cantidadTotal }}</td>
+                <td>{{ aportacion.mes }}</td>
+                <td>{{ aportacion.aportacionesMensuales }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

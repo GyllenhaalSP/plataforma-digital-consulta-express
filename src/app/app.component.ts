@@ -10,6 +10,5 @@ export class AppComponent {
     constructor(public authService: AuthService) {
     }
 
-    title = 'Plataforma Digital de Consulta';
-    protected readonly localStorage = localStorage;
+    title = 'Plataforma Digital de Consulta Express';
 }

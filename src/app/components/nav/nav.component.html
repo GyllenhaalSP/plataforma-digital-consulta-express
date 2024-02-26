@@ -1,4 +1,4 @@
-<nav>
+<nav class="mb-3">
     <ul>
         <li><a routerLink="/">Inicio</a></li>
         @if (!authService.isLoggedIn()) {
@@ -8,7 +8,7 @@
             @if (authService.isAdmin()) {
                 <li><a routerLink="/admin">Admin</a></li>
             } @else if (authService.isEntidad()) {
-                <li><a routerLink="/entidad">Entidad</a></li>
+                <li><a routerLink="/entidad">Datos Entidad</a></li>
                 <li><a routerLink="/carga-info">Cargar info</a></li>
             } @else if (authService.isUsuario()) {
                 <li><a routerLink="/usuario">Usuario</a></li>

@@ -10,6 +10,8 @@ import {AuthRoutingModule} from './auth/auth-routing.module';
 import {NavComponent} from './components/nav/nav.component';
 import {FooterComponent} from './components/footer/footer.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { EntidadesComponent } from './components/entidades/entidades.component';
+import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
 
 @NgModule({
     declarations: [
@@ -17,6 +19,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
         CargaInformacionComponent,
         NavComponent,
         FooterComponent,
+        EntidadesComponent,
+        BienvenidaComponent,
     ],
     imports: [
         BrowserModule,

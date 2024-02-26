@@ -20,9 +20,8 @@ export class AuthGuard implements CanActivate {
     }
 }
 
-// Guardia funcional para verificar roles
 export const hasRoleGuard: (roles: string[]) => CanActivateFn = (roles) => {
-    return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+    return (): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
         const authService = inject(AuthService);
         const router = inject(Router);
 

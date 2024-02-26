@@ -9,6 +9,9 @@ import {Router} from '@angular/router';
 })
 export class NavComponent {
 
+    nombreEntidad: string | null = this.authService.getUserData('nombre');
+    userRole: string | null = this.authService.getUserData('role');
+
     constructor(public authService: AuthService, private router: Router) {
     }
 

@@ -8,20 +8,9 @@ const Joi = require('joi');
 const multer = require('multer');
 const csvParser = require('csv-parser');
 const fs = require('fs');
+const {User, Aportacion, Entidad} = require("./src/models/models");
 
 const upload = multer({ dest: 'uploads/' });
-
-function auth(req, res, next) {
-    const token = req.header('Authorization');
-    if (!token) return res.status(401).send('Acceso denegado. No se proporcionó token.');
-
-    try {
-        req.user = jwt.verify(token, 'clave-macro-secreta');
-        next();
-    } catch (error) {
-        res.status(400).send('Token inválido.');
-    }
-}
 
 mongoose.connect('mongodb://localhost:27017/PDC')
     .then(() => console.log('Conectado a MongoDB...'))
@@ -37,50 +26,13 @@ const userSchema = Joi.object({
 
 const aportacionSchema = Joi.object({
     nombre: Joi.string().required(),
-    apellido: Joi.string().required(),
+    apellidos: Joi.string().required(),
     promotor: Joi.string().required(),
     entidadFinanciera: Joi.string().required(),
     cantidadTotal: Joi.number().required(),
     mes: Joi.string().required(),
     aportacionesMensuales: Joi.number().required()
 });
-
-const userSchemaMongo = new mongoose.Schema({
-    dni: {type: String, required: true, unique: true},
-    nombre: {type: String, required: true},
-    apellidos: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    role: {type: String, required: true, default: 'user'}
-});
-
-const EntidadSchemaMongo = new mongoose.Schema({
-    nombre: {type: String, required: true},
-    NIF: {type: String, required: true},
-    codigo: {type: String, required: true},
-    direccion: {type: String, required: true},
-    telefono: {type: String, required: true},
-    email: {type: String, required: true},
-    sitioWeb: {type: String, required: true},
-    password: {type: String, required: true},
-    role: {type: String, required: true, default: 'entidad'}
-});
-
-const aportacionSchemaMongo = new mongoose.Schema({
-    nombre: {type: String, required: true},
-    apellido: {type: String, required: true},
-    promotor: {type: String, required: true},
-    entidadFinanciera: {type: String, required: true},
-    cantidadTotal: {type: Number, required: true},
-    mes: {type: String, required: true},
-    aportacionesMensuales: {type: Number, required: true},
-    fechaProcesamiento: {type: Date, required: true},
-    estado: {type: String, required: true, default: 'procesada'}
-});
-
-const User = mongoose.model('User', userSchemaMongo, 'users');
-const Entidad = mongoose.model('Entidad', EntidadSchemaMongo, 'entidades');
-const Aportacion = mongoose.model('Aportacion', aportacionSchemaMongo, 'aportaciones');
 
 const app = express();
 const port = 3000;
@@ -94,6 +46,17 @@ app.get('/', (req, res) => {
 
 app.get('/acceso-denegado', (req, res) => {
     res.status(401).send('Acceso denegado');
+});
+
+app.get('/api/entidades/:nombreEntidad', async (req, res) => {
+    const nombreEntidad = req.params.nombreEntidad;
+
+    try {
+        const aportaciones = await Aportacion.find({ entidadFinanciera: nombreEntidad }, null, null);
+        res.json(aportaciones);
+    } catch (error) {
+        res.status(500).send({ message: "Error al obtener las aportaciones", error: error.message });
+    }
 });
 
 app.post('/api/register', async (req, res) => {
@@ -168,28 +131,31 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
     let results = [];
-    fs.createReadStream(req.file.path)
+    fs.createReadStream(req.file.path, { encoding: 'utf-8' })
         .pipe(csvParser())
         .on('data', (data) => results.push(data))
         .on('end', () => {
-            results = results.map((result) => {
-                const { error } = aportacionSchema.validate(result);
-                if (error) {
-                    console.error("error: " + error.details[0].message)
-                    return res.status(400).send(error.details[0].message);
-                }
-                return {
-                    nombre: result.nombre,
-                    apellido: result.apellido,
-                    promotor: result.promotor,
-                    entidadFinanciera: result.entidadFinanciera,
-                    cantidadTotal: result.cantidadTotal,
-                    mes: result.mes,
-                    aportacionesMensuales: result.aportacionesMensuales,
-                    fechaProcesamiento: new Date()
-                };
-            });
-            Aportacion.insertMany(results)
+            const validationErrors = results.map((result) => aportacionSchema.validate(result))
+                .filter((validationResult) => validationResult.error != null)
+                .map((validationResult) => validationResult.error.details[0].message);
+
+            if (validationErrors.length > 0) {
+                return res.status(400).send({ errors: validationErrors });
+            }
+
+            const aportacionesToInsert = results.map((result) => ({
+                nombre: result.nombre,
+                apellidos: result.apellidos,
+                promotor: result.promotor,
+                entidadFinanciera: result.entidadFinanciera,
+                cantidadTotal: result.cantidadTotal,
+                mes: result.mes,
+                aportacionesMensuales: result.aportacionesMensuales,
+                fechaProcesamiento: new Date(),
+                estado: "procesada"
+            }));
+
+            Aportacion.insertMany(aportacionesToInsert)
                 .then(() => {
                     fs.unlink(req.file.path, (err) => {
                         if (err) console.error('Error al eliminar el archivo temporal:', err);
