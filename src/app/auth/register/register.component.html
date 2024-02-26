@@ -12,10 +12,11 @@
                 formControlName="dni" id="dni" placeholder="DNI/NIF"
                 type="text">
             @if (registerForm.get('dni')?.errors?.['required'] && registerForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El campo DNI es obligatorio</p>
+                <p class="mt-2 text-sm text-red-600">El campo DNI/NIF es obligatorio</p>
             } @else if (registerForm.get('dni')?.errors?.['invalidDni'] && registerForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El DNI introducido no es válido, verifica la letra o el formato.</p>
+                <p class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</p>
                 <p class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</p>
+                <p class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</p>
             }
         </div>
 

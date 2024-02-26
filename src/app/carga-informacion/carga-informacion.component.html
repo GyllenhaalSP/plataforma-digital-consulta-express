@@ -1,14 +1,4 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="cargaForm" class="max-w-lg mx-auto my-10 space-y-4">
-    <input class="w-full p-2 border rounded-md" formControlName="nombre" placeholder="Nombre">
-    <input class="w-full p-2 border rounded-md" formControlName="apellido" placeholder="Apellido">
-    <input class="w-full p-2 border rounded-md" formControlName="promotor" placeholder="Promotor">
-    <input class="w-full p-2 border rounded-md" formControlName="entidadFinanciera" placeholder="Entidad Financiera">
-    <input class="w-full p-2 border rounded-md" formControlName="cantidadTotalAportacionesMensuales"
-           placeholder="Cantidad Total Aportaciones Mensuales">
-    <input class="w-full p-2 border rounded-md" formControlName="aportacionesMensuales"
-           placeholder="Aportaciones Mensuales">
-    <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700" type="submit">Cargar Información
-    </button>
+<form (submit)="uploadFile()">
+    <input type="file" (change)="fileSelected($event)" />
+    <button type="submit">Cargar</button>
 </form>
-
-

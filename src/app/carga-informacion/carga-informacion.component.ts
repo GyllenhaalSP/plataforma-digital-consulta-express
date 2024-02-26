@@ -1,33 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {DataService} from '../data.service';
+import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-carga-informacion',
     templateUrl: './carga-informacion.component.html',
     styleUrls: ['./carga-informacion.component.scss']
 })
-export class CargaInformacionComponent implements OnInit {
-    cargaForm!: FormGroup;
+export class CargaInformacionComponent {
+    selectedFile!: File;
 
-    constructor(private fb: FormBuilder, private dataService: DataService) {
+    constructor(private http: HttpClient) {}
+
+    fileSelected(event: any) {
+        this.selectedFile = event.target.files[0];
     }
 
-    ngOnInit(): void {
-        this.cargaForm = this.fb.group({
-            nombre: [''],
-            apellido: [''],
-            promotor: [''],
-            entidadFinanciera: [''],
-            cantidadTotalAportacionesMensuales: [''],
-            aportacionesMensuales: ['']
-        });
-    }
+    uploadFile() {
+        const formData = new FormData();
+        formData.append('file', this.selectedFile, this.selectedFile.name);
 
-    onSubmit() {
-        this.dataService.cargarInformacion(this.cargaForm.value).subscribe({
-            next: (response) => console.log(response),
-            error: (error) => console.error(error)
-        });
+        this.http.post('/api/cargar-informacion', formData).subscribe(
+            (response) => console.log('Carga exitosa', response),
+            (error) => console.error('Error en la carga', error)
+        );
     }
 }

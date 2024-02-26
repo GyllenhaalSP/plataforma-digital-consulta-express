@@ -5,13 +5,18 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Joi = require('joi');
+const multer = require('multer');
+const csvParser = require('csv-parser');
+const fs = require('fs');
+
+const upload = multer({ dest: 'uploads/' });
 
 function auth(req, res, next) {
     const token = req.header('Authorization');
     if (!token) return res.status(401).send('Acceso denegado. No se proporcionó token.');
 
     try {
-        req.user = jwt.verify(token, 'secretKey');
+        req.user = jwt.verify(token, 'clave-macro-secreta');
         next();
     } catch (error) {
         res.status(400).send('Token inválido.');
@@ -48,6 +53,18 @@ const userSchemaMongo = new mongoose.Schema({
     role: {type: String, required: true, default: 'user'}
 });
 
+const EntidadSchemaMongo = new mongoose.Schema({
+    nombre: {type: String, required: true},
+    NIF: {type: String, required: true},
+    codigo: {type: String, required: true},
+    direccion: {type: String, required: true},
+    telefono: {type: String, required: true},
+    email: {type: String, required: true},
+    sitioWeb: {type: String, required: true},
+    password: {type: String, required: true},
+    role: {type: String, required: true, default: 'entidad'}
+});
+
 const aportacionSchemaMongo = new mongoose.Schema({
     nombre: {type: String, required: true},
     apellido: {type: String, required: true},
@@ -60,7 +77,7 @@ const aportacionSchemaMongo = new mongoose.Schema({
 });
 
 const User = mongoose.model('User', userSchemaMongo, 'users');
-const Aportacion = mongoose.model('Aportacion', aportacionSchemaMongo, 'carga-informacion');
+const Entidad = mongoose.model('Entidad', EntidadSchemaMongo, 'entidades');
 
 const app = express();
 const port = 3000;
@@ -106,55 +123,55 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    let user = await User.findOne({ dni: req.body.dni });
-    if (!user) return res.status(400).send('Usuario o contraseña incorrectos.');
+    const {dni, password} = req.body;
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Usuario o contraseña incorrectos.');
+    let account = await User.findOne({ dni: dni });
 
-    const usuario = {
-        dni: user.dni,
-        nombre: user.nombre,
-        apellidos: user.apellidos,
-        email: user.email
+    let payload = {};
+
+    if (!account) {
+        account = await Entidad.findOne({ NIF: dni });
+        if (!account) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
+        payload = {
+            nombre: account.nombre,
+            NIF: account.NIF,
+            codigo: account.codigo,
+            direccion: account.direccion,
+            telefono: account.telefono,
+            email: account.email,
+            sitioWeb: account.sitioWeb,
+            role: account.role
+        }
+    }else {
+         payload = {
+            id: account.dni,
+            nombre: account.nombre,
+            apellidos: account.apellidos,
+            email: account.email,
+            role: account.role
+        }
     }
 
-    const token = jwt.sign({ _id: user._id }, 'clave-macro-secreta', { expiresIn: '24h' }); // Reemplaza 'secretKey' con tu clave secreta
-    res.send({ usuario, token });
+    const validPassword = await bcrypt.compare(password, account.password);
+    if (!validPassword) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
+
+    const token = jwt.sign({payload}, 'clave-macro-secreta', { expiresIn: '24h' });
+    res.send({ usuario: payload, token });
 });
 
+app.post('/api/cargar-informacion', upload.single('file'), async (req, res) => {
+    const results = [];
 
-app.post('/api/cargar-informacion', async (req, res) => {
-    const {error, value} = aportacionSchema.validate(req.body);
-
-    if (error) {
-        return res.status(400).send(error.details[0].message);
-    }
-
-    const datosProcesados = {
-        ...value,
-        fechaProcesamiento: new Date(),
-        estado: "procesado"
-    };
-
-    const aportacion = new Aportacion({
-        nombre: datosProcesados.nombre,
-        apellido: datosProcesados.apellido,
-        promotor: datosProcesados.promotor,
-        entidadFinanciera: datosProcesados.entidadFinanciera,
-        cantidadTotalAportacionesMensuales: datosProcesados.cantidadTotalAportacionesMensuales,
-        aportacionesMensuales: datosProcesados.aportacionesMensuales,
-        fechaProcesamiento: datosProcesados.fechaProcesamiento,
-        estado: datosProcesados.estado
-    });
-
-    try {
-        const resultado = await aportacion.save();
-        res.send(resultado);
-    } catch (error) {
-        res.status(500).send("Error al guardar los datos: " + error.message);
-    }
+    fs.createReadStream(req.file.path)
+        .pipe(csvParser())
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            // `results` contiene los objetos del CSV
+            // Guardar en la base de datos...
+            res.send('Archivo procesado con éxito');
+        });
 });
+
 
 app.listen(port, () => {
     console.log(`Servidor Express escuchando en http://localhost:${port}`);

@@ -3,12 +3,15 @@ import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "
 import {AuthService} from '../auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
+import {string} from 'joi';
 
 export function dniValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
         const value = control.value;
-        const dniRegex = /^[XYZ]?\d{5,8}[A-Z]$/i;
-        const validDni = dniRegex.test(value) && checkDniLetter(value);
+        const dniRegex = /^[XYZ]?\d{7,8}[A-HJ-NP-TV-Z]$/i;
+        const nifRegex = /^[A-HJ-NP-W][0-9]{7}[A-J0-9]$/i;
+        const nifResult = nifRegex.test(value);
+        const validDni = nifResult ? true : dniRegex.test(value) && checkDniLetter(value);
         return validDni ? null : {'invalidDni': {value}};
     };
 }

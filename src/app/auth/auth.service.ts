@@ -47,6 +47,22 @@ export class AuthService {
         }
     }
 
+    isAdmin(): boolean {
+        return this.getUserData('role') === 'admin';
+    }
+
+    isEntidad(): boolean {
+        return this.getUserData('role') === 'entidad';
+    }
+
+    isUsuario(): boolean {
+        return this.getUserData('role') === 'usuario';
+    }
+
+    isProveedor(): boolean {
+        return this.getUserData('role') === 'proveedor';
+    }
+
     logout() {
         localStorage.removeItem('user');
         localStorage.removeItem('token');

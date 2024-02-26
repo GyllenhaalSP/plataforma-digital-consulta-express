@@ -3,16 +3,17 @@
         <h2 class="text-center text-3xl font-extrabold text-gray-900">Iniciar Sesión</h2>
 
         <div class="form-group">
-            <label class="block text-sm font-medium text-gray-700" for="dni">DNI:</label>
+            <label class="block text-sm font-medium text-gray-700" for="dni">DNI/NIF:</label>
             <input class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="dni" id="dni" placeholder="DNI"
                    type="text">
             @if (loginForm.get('dni')?.errors?.['required'] && loginForm.get('dni')?.touched) {
                 <div class="mt-2 text-sm text-red-600">
-                    El DNI es obligatorio.
+                    El DNI/NIF es obligatorio.
                 </div>
             } @else if (loginForm.get('dni')?.errors?.['invalidDni'] && loginForm.get('dni')?.touched) {
-                <p class="mt-2 text-sm text-red-600">El DNI introducido no es válido, verifica la letra o el formato.</p>
+                <p class="mt-2 text-sm text-red-600">El DNI/NIF introducido no es válido, verifica la letra o el formato.</p>
                 <p class="mt-2 text-sm text-red-600">Ejemplo de DNI válido: 12345678Z</p>
+                <p class="mt-2 text-sm text-red-600">Ejemplo de NIF válido: Z12345678</p>
             }
         </div>
 
