@@ -1,0 +1,11 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="cargaForm" class="max-w-lg mx-auto my-10 space-y-4">
+    <input formControlName="nombre" placeholder="Nombre" class="w-full p-2 border rounded-md">
+    <input formControlName="apellido" placeholder="Apellido" class="w-full p-2 border rounded-md">
+    <input formControlName="promotor" placeholder="Promotor" class="w-full p-2 border rounded-md">
+    <input formControlName="entidadFinanciera" placeholder="Entidad Financiera" class="w-full p-2 border rounded-md">
+    <input formControlName="cantidadTotalAportacionesMensuales" placeholder="Cantidad Total Aportaciones Mensuales" class="w-full p-2 border rounded-md">
+    <input formControlName="aportacionesMensuales" placeholder="Aportaciones Mensuales" class="w-full p-2 border rounded-md">
+    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Cargar Información</button>
+</form>
+
+
