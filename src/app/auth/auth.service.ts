@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +18,37 @@ export class AuthService {
         return this.http.post(`${this.apiUrl}/login`, userData);
     }
 
+    isLoggedIn(): boolean {
+        const token = localStorage.getItem('token');
+        return !!token;
+    }
 
-    // Implementa más funciones según sea necesario, como registro, logout, etc.
-    isLoggedIn() {
-        return false;
+    getUser(): string | null {
+        return localStorage.getItem('user');
+    }
+
+    getUserData(param: string) {
+        if (!this.getUser()) {
+            return 'null??';
+        }
+        switch (param) {
+            case 'nombre':
+                return JSON.parse(this.getUser()!).nombre;
+            case 'apellidos':
+                return JSON.parse(this.getUser()!).apellidos;
+            case 'dni':
+                return JSON.parse(this.getUser()!).dni;
+            case 'email':
+                return JSON.parse(this.getUser()!).email;
+            case 'role':
+                return JSON.parse(this.getUser()!).role;
+            default:
+                return 'wow, default!';
+        }
+    }
+
+    logout() {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
     }
 }

@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {AuthService} from '../../auth/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-nav',
@@ -7,7 +9,11 @@ import {Component} from '@angular/core';
 })
 export class NavComponent {
 
+    constructor(public authService: AuthService, private router: Router) {
+    }
+
     logout() {
-        // Aquí deberías llamar a un servicio que cierre la sesión del usuario
+        this.authService.logout();
+        this.router.navigate(['/login']);
     }
 }

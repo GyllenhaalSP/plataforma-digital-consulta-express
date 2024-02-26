@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {dniValidator} from '../register/register.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-login',
@@ -12,12 +13,12 @@ import {dniValidator} from '../register/register.component';
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
 
-    constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            dni: ['', Validators.required, dniValidator()],
+            dni: ['', [Validators.required, dniValidator()]],
             password: ['', Validators.required]
         });
     }
@@ -27,12 +28,16 @@ export class LoginComponent implements OnInit {
             this.authService.login(this.loginForm.value).subscribe({
                 next: (response: any) => {
                     console.log('Inicio de sesión exitoso', response);
-                    localStorage.setItem('token', response.token); // Almacena el token en el almacenamiento local
-                    this.router.navigate(['/']); // Redirige al usuario a la página de inicio o dashboard
+                    localStorage.setItem('user', JSON.stringify(response.usuario));
+                    localStorage.setItem('token', response.token);
+                    this.router.navigate(['/']);
                 },
                 error: (error) => {
                     console.error('Error en el inicio de sesión', error);
-                    // Aquí puedes manejar errores, como mostrar un mensaje al usuario
+                    this.snackBar.open('Error en el inicio de sesión: ' + error.error, 'Cerrar', {
+                        duration: 3000,
+                        panelClass: ['mat-toolbar', 'mat-warn']
+                    });
                 }
             });
         }

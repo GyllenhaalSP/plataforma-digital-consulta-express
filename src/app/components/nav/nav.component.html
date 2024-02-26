@@ -1,11 +1,11 @@
 <nav>
     <ul>
         <li><a routerLink="/">Inicio</a></li>
-
+        @if (!authService.isLoggedIn()) {
             <li><a routerLink="/login">Iniciar Sesión</a></li>
             <li><a routerLink="/registro">Registro</a></li>
-
+        } @else {
             <li><a (click)="logout()">Cerrar Sesión</a></li>
-
+        }
     </ul>
 </nav>

@@ -4,7 +4,12 @@
     Bienvenido a la {{ title }}
 </h1>
 
-<p>Por favor, <a routerLink="/register">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
+@if (!authService.isLoggedIn()){
+    <p>Por favor, <a routerLink="/register">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
+} @else {
+    <p>Bienvenido, {{ authService.getUserData('nombre')}}.</p>
+    <p>Estás viendo contenido privado.</p>
+}
 
 <router-outlet></router-outlet>
 

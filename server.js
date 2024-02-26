@@ -44,7 +44,8 @@ const userSchemaMongo = new mongoose.Schema({
     nombre: {type: String, required: true},
     apellidos: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    role: {type: String, required: true, default: 'user'}
 });
 
 const aportacionSchemaMongo = new mongoose.Schema({
@@ -105,14 +106,21 @@ app.post('/api/register', async (req, res) => {
 });
 
 app.post('/api/login', async (req, res) => {
-    let user = await User.findOne({ email: req.body.email });
+    let user = await User.findOne({ dni: req.body.dni });
     if (!user) return res.status(400).send('Usuario o contraseña incorrectos.');
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Usuario o contraseña incorrectos.');
 
-    const token = jwt.sign({ _id: user._id }, 'secretKey', { expiresIn: '24h' }); // Reemplaza 'secretKey' con tu clave secreta
-    res.send({ token });
+    const usuario = {
+        dni: user.dni,
+        nombre: user.nombre,
+        apellidos: user.apellidos,
+        email: user.email
+    }
+
+    const token = jwt.sign({ _id: user._id }, 'clave-macro-secreta', { expiresIn: '24h' }); // Reemplaza 'secretKey' con tu clave secreta
+    res.send({ usuario, token });
 });
 
 
