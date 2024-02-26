@@ -1,11 +1,14 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="cargaForm" class="max-w-lg mx-auto my-10 space-y-4">
-    <input formControlName="nombre" placeholder="Nombre" class="w-full p-2 border rounded-md">
-    <input formControlName="apellido" placeholder="Apellido" class="w-full p-2 border rounded-md">
-    <input formControlName="promotor" placeholder="Promotor" class="w-full p-2 border rounded-md">
-    <input formControlName="entidadFinanciera" placeholder="Entidad Financiera" class="w-full p-2 border rounded-md">
-    <input formControlName="cantidadTotalAportacionesMensuales" placeholder="Cantidad Total Aportaciones Mensuales" class="w-full p-2 border rounded-md">
-    <input formControlName="aportacionesMensuales" placeholder="Aportaciones Mensuales" class="w-full p-2 border rounded-md">
-    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700">Cargar Información</button>
+    <input class="w-full p-2 border rounded-md" formControlName="nombre" placeholder="Nombre">
+    <input class="w-full p-2 border rounded-md" formControlName="apellido" placeholder="Apellido">
+    <input class="w-full p-2 border rounded-md" formControlName="promotor" placeholder="Promotor">
+    <input class="w-full p-2 border rounded-md" formControlName="entidadFinanciera" placeholder="Entidad Financiera">
+    <input class="w-full p-2 border rounded-md" formControlName="cantidadTotalAportacionesMensuales"
+           placeholder="Cantidad Total Aportaciones Mensuales">
+    <input class="w-full p-2 border rounded-md" formControlName="aportacionesMensuales"
+           placeholder="Aportaciones Mensuales">
+    <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700" type="submit">Cargar Información
+    </button>
 </form>
 
 

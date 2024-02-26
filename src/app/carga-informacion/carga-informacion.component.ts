@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { DataService } from '../data.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {DataService} from '../data.service';
 
 @Component({
     selector: 'app-carga-informacion',
@@ -10,7 +10,8 @@ import { DataService } from '../data.service';
 export class CargaInformacionComponent implements OnInit {
     cargaForm!: FormGroup;
 
-    constructor(private fb: FormBuilder, private dataService: DataService) { }
+    constructor(private fb: FormBuilder, private dataService: DataService) {
+    }
 
     ngOnInit(): void {
         this.cargaForm = this.fb.group({

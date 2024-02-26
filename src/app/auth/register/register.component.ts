@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
+import {AuthService} from '../auth.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Router} from '@angular/router';
 
 function dniValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -36,11 +39,14 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
+        private router: Router,
+        private authService: AuthService,
+        private snackBar: MatSnackBar,
     ) {}
 
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
-            ID: ['', [Validators.required, dniValidator()]],
+            dni: ['', [Validators.required, dniValidator()]],
             nombre: ['', [Validators.required, Validators.minLength(3)]],
             apellidos: ['', [Validators.required, Validators.minLength(3)]],
             email: ['', [Validators.required, Validators.email]],
@@ -50,6 +56,26 @@ export class RegisterComponent implements OnInit {
     }
 
     onRegister(): void {
+        if (this.registerForm.valid) {
 
+            const userData = {
+                dni: this.registerForm.value.dni,
+                nombre: this.registerForm.value.nombre,
+                apellidos: this.registerForm.value.apellidos,
+                email: this.registerForm.value.email,
+                password: this.registerForm.value.password,
+            };
+
+            this.authService.register(userData).subscribe({
+                next: (response) => {
+                    this.snackBar.open('Registro exitoso', 'Cerrar', { duration: 2000 });
+                    setTimeout(() => this.router.navigate(['/login']), 2000);
+                },
+                error: (error) => {
+                    console.error('Error en el registro', error);
+                    this.snackBar.open('Error en el registro. Por favor, inténtalo de nuevo.', 'Cerrar', { duration: 3000 });
+                }
+            });
+        }
     }
 }

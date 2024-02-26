@@ -7,13 +7,17 @@ import {catchError, tap} from 'rxjs/operators';
     providedIn: 'root'
 })
 export class AuthService {
-    private authUrl = 'http://localhost:3000/auth';
+    private apiUrl = 'http://localhost:3000/api';
 
     constructor(private http: HttpClient) {
     }
 
+    register(userData: any) {
+        return this.http.post(`${this.apiUrl}/register`, userData);
+    }
+
     login(credentials: { username: string, password: string }): Observable<any> {
-        return this.http.post(`${this.authUrl}/login`, credentials).pipe(
+        return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
             tap(_ => console.log('login successful')),
             catchError(error => {
                 console.error('login error', error);

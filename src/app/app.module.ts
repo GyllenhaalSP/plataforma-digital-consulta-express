@@ -6,14 +6,17 @@ import {AppComponent} from './app.component';
 import {CargaInformacionComponent} from './carga-informacion/carga-informacion.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {RegisterComponent} from './auth/register/register.component';
-import {LoginComponent} from './auth/login/login.component';
 import {AuthRoutingModule} from './auth/auth-routing.module';
+import {NavComponent} from './components/nav/nav.component';
+import {FooterComponent} from './components/footer/footer.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
     declarations: [
         AppComponent,
         CargaInformacionComponent,
+        NavComponent,
+        FooterComponent,
     ],
     imports: [
         BrowserModule,
@@ -22,7 +25,9 @@ import {AuthRoutingModule} from './auth/auth-routing.module';
         AuthRoutingModule,
         AppRoutingModule
     ],
-    providers: [],
+    providers: [
+    provideAnimationsAsync()
+  ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
