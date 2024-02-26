@@ -40,7 +40,8 @@ const aportacionSchema = Joi.object({
     apellido: Joi.string().required(),
     promotor: Joi.string().required(),
     entidadFinanciera: Joi.string().required(),
-    cantidadTotalAportacionesMensuales: Joi.number().required(),
+    cantidadTotal: Joi.number().required(),
+    mes: Joi.string().required(),
     aportacionesMensuales: Joi.number().required()
 });
 
@@ -70,14 +71,16 @@ const aportacionSchemaMongo = new mongoose.Schema({
     apellido: {type: String, required: true},
     promotor: {type: String, required: true},
     entidadFinanciera: {type: String, required: true},
-    cantidadTotalAportacionesMensuales: {type: Number, required: true},
+    cantidadTotal: {type: Number, required: true},
+    mes: {type: String, required: true},
     aportacionesMensuales: {type: Number, required: true},
     fechaProcesamiento: {type: Date, required: true},
-    estado: {type: String, required: true}
+    estado: {type: String, required: true, default: 'procesada'}
 });
 
 const User = mongoose.model('User', userSchemaMongo, 'users');
 const Entidad = mongoose.model('Entidad', EntidadSchemaMongo, 'entidades');
+const Aportacion = mongoose.model('Aportacion', aportacionSchemaMongo, 'aportaciones');
 
 const app = express();
 const port = 3000;
@@ -89,6 +92,10 @@ app.get('/', (req, res) => {
     res.send('Servidor Express funcionando!');
 });
 
+app.get('/acceso-denegado', (req, res) => {
+    res.status(401).send('Acceso denegado');
+});
+
 app.post('/api/register', async (req, res) => {
     const { error } = userSchema.validate(req.body);
     if (error) {
@@ -96,7 +103,7 @@ app.post('/api/register', async (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    let user = await User.findOne({ email: req.body.dni || req.body.email});
+    let user = await User.findOne({ dni: req.body.dni || req.body.email}, null, null);
     if (user) {
         console.error('El usuario ya existe.')
         return res.status(400).send('El usuario ya existe.');
@@ -125,12 +132,12 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     const {dni, password} = req.body;
 
-    let account = await User.findOne({ dni: dni });
+    let account = await User.findOne({ dni: dni.toUpperCase() }, null, null);
 
     let payload = {};
 
     if (!account) {
-        account = await Entidad.findOne({ NIF: dni });
+        account = await Entidad.findOne({ NIF: dni.toUpperCase() }, null, null);
         if (!account) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
         payload = {
             nombre: account.nombre,
@@ -145,33 +152,55 @@ app.post('/api/login', async (req, res) => {
     }else {
          payload = {
             id: account.dni,
-            nombre: account.nombre,
-            apellidos: account.apellidos,
-            email: account.email,
-            role: account.role
+             nombre: account.nombre,
+             apellidos: account.apellidos,
+             email: account.email,
+             role: account.role
         }
     }
 
     const validPassword = await bcrypt.compare(password, account.password);
     if (!validPassword) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
 
-    const token = jwt.sign({payload}, 'clave-macro-secreta', { expiresIn: '24h' });
-    res.send({ usuario: payload, token });
+    const token = jwt.sign(payload, 'clave-macro-secreta', { expiresIn: '24h' });
+    res.send({ token });
 });
 
-app.post('/api/cargar-informacion', upload.single('file'), async (req, res) => {
-    const results = [];
-
+app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
+    let results = [];
     fs.createReadStream(req.file.path)
         .pipe(csvParser())
         .on('data', (data) => results.push(data))
         .on('end', () => {
-            // `results` contiene los objetos del CSV
-            // Guardar en la base de datos...
-            res.send('Archivo procesado con éxito');
+            results = results.map((result) => {
+                const { error } = aportacionSchema.validate(result);
+                if (error) {
+                    console.error("error: " + error.details[0].message)
+                    return res.status(400).send(error.details[0].message);
+                }
+                return {
+                    nombre: result.nombre,
+                    apellido: result.apellido,
+                    promotor: result.promotor,
+                    entidadFinanciera: result.entidadFinanciera,
+                    cantidadTotal: result.cantidadTotal,
+                    mes: result.mes,
+                    aportacionesMensuales: result.aportacionesMensuales,
+                    fechaProcesamiento: new Date()
+                };
+            });
+            Aportacion.insertMany(results)
+                .then(() => {
+                    fs.unlink(req.file.path, (err) => {
+                        if (err) console.error('Error al eliminar el archivo temporal:', err);
+                        res.send('Archivo procesado con éxito y datos almacenados.');
+                    });
+                })
+                .catch((error) => {
+                    res.status(500).send('Error al almacenar los datos: ' + error.message);
+                });
         });
 });
-
 
 app.listen(port, () => {
     console.log(`Servidor Express escuchando en http://localhost:${port}`);

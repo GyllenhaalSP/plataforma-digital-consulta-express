@@ -3,7 +3,6 @@ import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "
 import {AuthService} from '../auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
-import {string} from 'joi';
 
 export function dniValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {

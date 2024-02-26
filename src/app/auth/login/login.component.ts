@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
             this.authService.login(this.loginForm.value).subscribe({
                 next: (response: any) => {
                     console.log('Inicio de sesión exitoso', response);
-                    localStorage.setItem('user', JSON.stringify(response.usuario));
                     localStorage.setItem('token', response.token);
                     this.router.navigate(['/']);
                 },

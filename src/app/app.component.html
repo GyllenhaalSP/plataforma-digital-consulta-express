@@ -1,15 +1,16 @@
 <app-nav />
 
-<h1 class="text-3xl font-bold underline mt-10 mb-5">
-    Bienvenido a la {{ title }}
-</h1>
-
 @if (!authService.isLoggedIn()){
     <p>Por favor, <a routerLink="/register">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
 } @else {
-    <p>Bienvenido, {{ authService.getUserData('nombre')}}.</p>
-    <p>Estás viendo contenido privado.</p>
+    <div class="flex place-content-end mr-5">
+        <p>Bienvenido, {{ authService.getUserData('nombre')}}</p>
+    </div>
 }
+
+<h1 class="text-3xl font-bold underline mt-10 mb-5">
+    Bienvenido a la {{ title }}
+</h1>
 
 <router-outlet></router-outlet>
 

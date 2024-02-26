@@ -9,6 +9,7 @@
                 <li><a routerLink="/admin">Admin</a></li>
             } @else if (authService.isEntidad()) {
                 <li><a routerLink="/entidad">Entidad</a></li>
+                <li><a routerLink="/carga-info">Cargar info</a></li>
             } @else if (authService.isUsuario()) {
                 <li><a routerLink="/usuario">Usuario</a></li>
             } @else if (authService.isProveedor()) {

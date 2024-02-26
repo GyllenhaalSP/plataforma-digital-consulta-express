@@ -1,14 +1,13 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {AuthService} from './auth.service';
+import { Injectable, inject } from '@angular/core';
+import { CanActivate, CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-
-    constructor(private authService: AuthService, private router: Router) {
-    }
+    constructor(private authService: AuthService, private router: Router) {}
 
     canActivate(
         next: ActivatedRouteSnapshot,
@@ -20,3 +19,19 @@ export class AuthGuard implements CanActivate {
         return false;
     }
 }
+
+// Guardia funcional para verificar roles
+export const hasRoleGuard: (roles: string[]) => CanActivateFn = (roles) => {
+    return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+        const authService = inject(AuthService);
+        const router = inject(Router);
+
+        const userRole = authService.getUserData('role');
+        if (roles.includes(userRole)) {
+            return true;
+        } else {
+            return router.parseUrl('/acceso-denegado');
+        }
+    };
+};
+
