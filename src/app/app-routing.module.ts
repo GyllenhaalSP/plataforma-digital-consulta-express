@@ -16,7 +16,7 @@ const routes: Routes = [
     },
     {
         path: 'entidad',
-        canActivate: [hasRoleGuard(['entidad'])],
+/*        canActivate: [hasRoleGuard(['entidad'])],*/
         component: EntidadesComponent
     }
 ];
