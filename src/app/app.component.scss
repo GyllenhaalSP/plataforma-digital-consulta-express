@@ -20,3 +20,13 @@ a {
     text-align: center;
     font-weight: bold;
 }
+
+#tres {
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+#tres > p {
+    text-align: center;
+    text-shadow: 1px 1px 2px white;
+}

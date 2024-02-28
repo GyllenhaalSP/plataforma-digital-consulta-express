@@ -1,8 +1,34 @@
+<br><hr><br>
 <h2 class="text-center">Servicio de carga de información</h2>
+<hr><br>
+<div id="container">
+    <div>
+        <h2>¡Bienvenido!</h2>
+        <p>Esta guía te ayudará a preparar tus datos para cargarlos en nuestra plataforma de consultas bancarias. Sigue estos simples pasos para una carga sin complicaciones:</p>
+        <h2>Formato del Archivo:</h2>
+        <p>Utiliza un archivo de texto plano (.txt) o CSV (.csv).</p>
+        <p>Separa los datos con comas (,).</p>
+        <h2>Encabezado Obligatorio:</h2>
+        <p>La primera línea de tu archivo debe contener los encabezados de los campos.</p>
+        <p>Los encabezados son: nombre, apellidos, promotor, entidad financiera, cantidad total, mes y aportaciones mensuales.</p>
+        <h2>Datos del Cliente:</h2>
+        <p>Cada línea después del encabezado representa un cliente.</p>
+        <p>Introduce los datos en el mismo orden que los encabezados, separados por comas.</p>
+        <h2>Ejemplo:</h2>
+        <p>nombre,apellidos,promotor,entidadFinanciera,cantidadTotal,mes,aportacionesMensuales</p>
+        <p>Laura,García Martínez,Palomitas D,Santander,12000,enero,600</p>
+        <p>...</p>
+        <br><br>
+        <p>¡Y eso es todo! Con estos simples pasos, podrás cargar tus datos de manera eficiente en nuestra plataforma. Si tienes alguna pregunta, ¡no dudes en contactarnos!</p>
 
-<p>Por favor seleccione el archivo que desea cargar</p>
 
-<form (submit)="uploadFile()">
-    <input type="file" (change)="fileSelected($event)" />
-    <button type="submit">Cargar archivo</button>
-</form>
+    </div><br>
+    <div>
+        <p>Por favor seleccione el archivo que desea cargar</p>
+        <form (submit)="uploadFile()">
+            <input type="file" (change)="fileSelected($event)" /><br><br>
+            <button type="submit">Cargar archivo</button>
+        </form>
+
+    </div>
+</div>

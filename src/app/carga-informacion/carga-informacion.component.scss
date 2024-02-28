@@ -1,0 +1,46 @@
+div {
+    text-align: center;
+    border: solid 4px dimgray;
+    width: min-content;
+    margin: 20px;
+    padding: 20px;
+    background-color: grey;
+    border-radius: 5px;
+}
+
+h2, h3{
+    color: dimgray;
+    text-shadow: 1px 1px 2px antiquewhite;
+    font-size: 200%;
+}
+
+* {
+    color: dimgray;
+    text-shadow: 1px 1px 2px #DDD;
+    font-weight: bold;
+}
+
+button {
+    font-weight: normal;
+    padding: 10px 20px;
+    background-color: dimgray;
+    color: black;
+    text-shadow: 1px 1px 2px antiquewhite;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    color: dimgray;
+    text-shadow: 1px 1px 2px white;
+}
+
+button:active {
+    background-color: darkgray;
+}
+
+#container {
+    display: flex;
+    margin: auto;
+}
