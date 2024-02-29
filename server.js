@@ -9,8 +9,9 @@ const multer = require('multer');
 const csvParser = require('csv-parser');
 const fs = require('fs');
 const {User, Aportacion, Entidad, Reclamacion} = require("./src/models/models");
+const {join} = require("path");
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({dest: 'uploads/'});
 
 mongoose.connect('mongodb://localhost:27017/PDC')
     .then(() => console.log('Conectado a MongoDB...'))
@@ -54,34 +55,34 @@ app.get('/api/entidades/:nombreEntidad', async (req, res) => {
     console.log("nombre: ", nombreEntidad);
 
     try {
-        const aportaciones = await Aportacion.find({ entidadFinanciera: nombreEntidad }, null, null);
+        const aportaciones = await Aportacion.find({entidadFinanciera: nombreEntidad}, null, null);
         console.log(aportaciones);
         res.json(aportaciones);
     } catch (error) {
-        res.status(500).send({ message: "Error al obtener las aportaciones", error: error.message });
+        res.status(500).send({message: "Error al obtener las aportaciones", error: error.message});
     }
 });
 
 app.get('/api/ciudadanos/:id', async (req, res) => {
     try {
-        const { id } = req.params;
+        const {id} = req.params;
         console.log(id);
 
-        const aportaciones = await Aportacion.find({ dni: id }, null, null);
+        const aportaciones = await Aportacion.find({dni: id}, null, null);
         console.log(aportaciones);
         res.json(aportaciones);
 
     } catch (error) {
         console.error('Error al obtener las aportaciones para el ciudadano:', error);
-        res.status(500).send({ message: 'Error al obtener las aportaciones' });
+        res.status(500).send({message: 'Error al obtener las aportaciones'});
     }
 });
 
 app.get('/api/promotores/:id', async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     console.log(id);
     try {
-        const aportaciones = await Aportacion.find({ promotor: id }, null, null);
+        const aportaciones = await Aportacion.find({promotor: id}, null, null);
         console.log(aportaciones);
         res.json(aportaciones);
     } catch (error) {
@@ -91,13 +92,13 @@ app.get('/api/promotores/:id', async (req, res) => {
 });
 
 app.post('/api/register', async (req, res) => {
-    const { error } = userSchema.validate(req.body);
+    const {error} = userSchema.validate(req.body);
     if (error) {
         console.error("error: " + error.details[0].message)
         return res.status(400).send(error.details[0].message);
     }
 
-    let user = await User.findOne({ dni: req.body.dni || req.body.email}, null, null);
+    let user = await User.findOne({dni: req.body.dni || req.body.email}, null, null);
     if (user) {
         console.error('El usuario ya existe.')
         return res.status(400).send('El usuario ya existe.');
@@ -116,8 +117,8 @@ app.post('/api/register', async (req, res) => {
 
     try {
         await user.save();
-        const token = jwt.sign({ _id: user._id }, 'clave-macro-secreta', { expiresIn: '24h' });
-        res.send({ token });
+        const token = jwt.sign({_id: user._id}, 'clave-macro-secreta', {expiresIn: '24h'});
+        res.send({token});
     } catch (error) {
         res.status(500).send("Error al guardar el usuario: " + error.message);
     }
@@ -126,12 +127,12 @@ app.post('/api/register', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     const {dni, password} = req.body;
 
-    let account = await User.findOne({ dni: dni.toUpperCase() }, null, null);
+    let account = await User.findOne({dni: dni.toUpperCase()}, null, null);
 
     let payload = {};
 
     if (!account) {
-        account = await Entidad.findOne({ NIF: dni.toUpperCase() }, null, null);
+        account = await Entidad.findOne({NIF: dni.toUpperCase()}, null, null);
         if (!account) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
         payload = {
             nombre: account.nombre,
@@ -143,28 +144,28 @@ app.post('/api/login', async (req, res) => {
             sitioWeb: account.sitioWeb,
             role: account.role
         }
-    }else {
-         payload = {
+    } else {
+        payload = {
             id: account.dni,
-             nombre: account.nombre,
-             apellidos: account.apellidos,
-             email: account.email,
-             role: account.role
+            nombre: account.nombre,
+            apellidos: account.apellidos,
+            email: account.email,
+            role: account.role
         }
     }
 
     const validPassword = await bcrypt.compare(password, account.password);
     if (!validPassword) return res.status(400).send('DNI/NIF o contraseña incorrectos.');
 
-    const token = jwt.sign(payload, 'clave-macro-secreta', { expiresIn: '24h' });
-    res.send({ token });
+    const token = jwt.sign(payload, 'clave-macro-secreta', {expiresIn: '24h'});
+    res.send({token});
 });
 
 app.get('/api/admin/datos-completos', async (req, res) => {
     try {
         const usuarios = await User.find({role: 'user'}, null, null);
         const entidades = await Entidad.find({}, null, null);
-        const promotores = await User.find({ role: 'promotor' }, null, null);
+        const promotores = await User.find({role: 'promotor'}, null, null);
         const aportaciones = await Aportacion.find(null, null, null);
         const cantidadTotalAportaciones = aportaciones.reduce((total, aportacion) => total + aportacion.cantidadTotal, 0);
 
@@ -176,21 +177,32 @@ app.get('/api/admin/datos-completos', async (req, res) => {
         });
     } catch (error) {
         console.error('Error al obtener los datos completos:', error);
-        res.status(500).send({ message: 'Error al obtener los datos completos' });
+        res.status(500).send({message: 'Error al obtener los datos completos'});
     }
 });
 
-app.get('/api/reclamaciones', async (req, res) => {
-    try {
-        const reclamaciones = await Reclamacion.find({}, null, null);
-        res.status(200).json(reclamaciones);
-    } catch (error) {
-        res.status(500).send({ mensaje: 'Error al obtener las reclamaciones/peticiones', error });
-    }
+app.get('/api/ver-reclamaciones', async (req, res) => {
+    const dirPath = join(__dirname, 'reclamaciones');
+    fs.readdir(dirPath, (err, files) => {
+        if (err) {
+            console.error('Error al leer el directorio:', err);
+            return res.status(500).send({mensaje: 'Error al obtener las reclamaciones'});
+        }
+
+        const reclamaciones = files.map(file => {
+            return JSON.parse(fs.readFileSync(join(dirPath, file), 'utf8'));
+        });
+
+        res.json(reclamaciones);
+    });
 });
 
 app.post('/api/reclamaciones', async (req, res) => {
-    const { nombre, apellidos, email, tipo, descripcion } = req.body;
+    let {nombre, apellidos, email, tipo, descripcion} = req.body;
+
+    if (!apellidos) {
+        apellidos = '   ';
+    }
 
     const nuevaReclamacion = new Reclamacion({
         nombre,
@@ -204,17 +216,25 @@ app.post('/api/reclamaciones', async (req, res) => {
 
     try {
         await nuevaReclamacion.save();
-        res.status(201).send({ mensaje: 'Reclamación/Petición creada exitosamente' });
+
+        const filePath = join(__dirname, 'reclamaciones', `${nuevaReclamacion.id}.json`);
+        if (!fs.existsSync('reclamaciones')) fs.mkdirSync('reclamaciones');
+        fs.writeFile(filePath, JSON.stringify(nuevaReclamacion, null, 2), (err) => {
+            if (err) {
+                console.error('Error al guardar el archivo JSON:', err);
+                return res.status(500).send({mensaje: 'Error al guardar la reclamación'});
+            }
+            res.status(201).send({mensaje: 'Reclamación/Petición creada y guardada exitosamente'});
+        });
     } catch (error) {
         console.error("Error al intentar crear la reclamación/petición:", error);
-        res.status(400).send({ mensaje: "Error al crear la reclamación/petición", error: error.message });
+        res.status(400).send({mensaje: "Error al crear la reclamación/petición", error: error.message});
     }
 });
 
-
 app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
     let results = [];
-    fs.createReadStream(req.file.path, { encoding: 'utf-8' })
+    fs.createReadStream(req.file.path, {encoding: 'utf-8'})
         .pipe(csvParser())
         .on('data', (data) => results.push(data))
         .on('end', () => {
@@ -223,7 +243,7 @@ app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
                 .map((validationResult) => validationResult.error.details[0].message);
 
             if (validationErrors.length > 0) {
-                return res.status(400).send({ errors: validationErrors });
+                return res.status(400).send({errors: validationErrors});
             }
 
             const aportacionesToInsert = results.map((result) => ({

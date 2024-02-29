@@ -7,6 +7,7 @@ import {CiudadanosComponent} from './components/ciudadanos/ciudadanos.component'
 import {PromotoresComponent} from './components/promotores/promotores.component';
 import {AdminComponent} from './components/admin/admin.component';
 import {ReclamacionesComponent} from './components/reclamacion/reclamaciones.component';
+import {VerReclamacionesComponent} from './components/ver-reclamaciones/ver-reclamaciones.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,11 @@ const routes: Routes = [
     {
         path: 'reclamaciones',
         component: ReclamacionesComponent
+    },
+    {
+        path: 'ver-reclamaciones',
+        canActivate: [hasRoleGuard(['admin'])],
+        component: VerReclamacionesComponent
     }
 ];
 

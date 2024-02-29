@@ -34,5 +34,4 @@ async function insertarUsuariosFicticios() {
     }));
 }
 
-// Ejecutar la función para insertar los usuarios
 insertarUsuariosFicticios().then(() => console.log('Todos los usuarios ficticios han sido insertados.'));

@@ -16,6 +16,7 @@ import { CiudadanosComponent } from './components/ciudadanos/ciudadanos.componen
 import { PromotoresComponent } from './components/promotores/promotores.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ReclamacionesComponent } from './components/reclamacion/reclamaciones.component';
+import { VerReclamacionesComponent } from './components/ver-reclamaciones/ver-reclamaciones.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { ReclamacionesComponent } from './components/reclamacion/reclamaciones.c
         PromotoresComponent,
         AdminComponent,
         ReclamacionesComponent,
+        VerReclamacionesComponent,
     ],
     imports: [
         BrowserModule,

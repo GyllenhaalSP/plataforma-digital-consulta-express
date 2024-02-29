@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReclamacionesService } from '../../services/reclamacion.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
     selector: 'app-reclamaciones',
@@ -11,16 +12,23 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class ReclamacionesComponent implements OnInit {
     reclamacionForm!: FormGroup;
 
-    constructor(private fb: FormBuilder, private reclamacionesService: ReclamacionesService, private snackBar: MatSnackBar) {}
+    constructor(
+        private fb: FormBuilder,
+        private reclamacionesService: ReclamacionesService,
+        private snackBar: MatSnackBar,
+        private authService: AuthService) {}
 
     ngOnInit(): void {
+        const rol = this.authService.getUserData('rol');
         this.reclamacionForm = this.fb.group({
             nombre: ['', Validators.required],
-            apellidos: ['', Validators.required],
+            apellidos: ['', rol === 'user' ? Validators.required : Validators.nullValidator],
             email: ['', [Validators.required, Validators.email]],
             tipo: ['', Validators.required],
             descripcion: ['', Validators.required],
         });
+
+        this.prefillForm();
     }
 
     enviarReclamacion(): void {
@@ -42,6 +50,22 @@ export class ReclamacionesComponent implements OnInit {
                         verticalPosition: 'top',
                     });
                 }
+            });
+        }
+    }
+
+    private prefillForm() {
+        const userData = {
+            nombre: this.authService.getUserData("nombre"),
+            apellidos: this.authService.getUserData("apellidos"),
+            email: this.authService.getUserData("email")
+        }
+
+        if (userData) {
+            this.reclamacionForm.patchValue({
+                nombre: userData.nombre,
+                apellidos: userData.apellidos,
+                email: userData.email
             });
         }
     }

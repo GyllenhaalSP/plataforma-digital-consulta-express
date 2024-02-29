@@ -1,0 +1,11 @@
+<div *ngIf="reclamaciones.length; else noReclamaciones">
+    <h2>Reclamaciones</h2>
+    <ul>
+        <li *ngFor="let reclamacion of reclamaciones">
+            {{ reclamacion | json }}
+        </li>
+    </ul>
+</div>
+<ng-template #noReclamaciones>
+    <p>No hay reclamaciones para mostrar.</p>
+</ng-template>

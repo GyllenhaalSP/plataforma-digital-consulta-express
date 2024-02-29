@@ -30,12 +30,20 @@ export class LoginComponent implements OnInit {
                     console.log('Inicio de sesión exitoso', response);
                     localStorage.setItem('token', response.token);
                     this.router.navigate(['/']);
+                    this.snackBar.open('Sesión iniciada', 'Cerrar', {
+                        duration: 3000,
+                        panelClass: ['mat-toolbar', 'mat-primary'],
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
+                    });
                 },
                 error: (error) => {
                     console.error('Error en el inicio de sesión', error);
                     this.snackBar.open('Error en el inicio de sesión: ' + error.error, 'Cerrar', {
                         duration: 3000,
-                        panelClass: ['mat-toolbar', 'mat-warn']
+                        panelClass: ['mat-toolbar', 'mat-error'],
+                        horizontalPosition: 'center',
+                        verticalPosition: 'top',
                     });
                 }
             });
