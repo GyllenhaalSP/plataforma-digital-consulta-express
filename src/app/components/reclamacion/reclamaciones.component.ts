@@ -16,7 +16,7 @@ export class ReclamacionesComponent implements OnInit {
         private fb: FormBuilder,
         private reclamacionesService: ReclamacionesService,
         private snackBar: MatSnackBar,
-        private authService: AuthService) {}
+        protected authService: AuthService) {}
 
     ngOnInit(): void {
         const rol = this.authService.getUserData('rol');
