@@ -1,32 +1,34 @@
-<div class="container mt-5">
-    <hr>
-    <h2>Formulario de Reclamación/Petición</h2>
-    <form [formGroup]="reclamacionForm" (ngSubmit)="enviarReclamacion()">
-        <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" formControlName="nombre">
-        </div>
-        <div class="mb-3">
-            <label for="apellidos" class="form-label">Apellidos</label>
-            <input type="text" id="apellidos" class="form-control" formControlName="apellidos">
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-control" formControlName="email">
-        </div>
-        <div class="mb-3">
-            <label for="tipo" class="form-label">Tipo</label>
-            <select id="tipo" class="form-select" formControlName="tipo">
-                <option value="reclamacion">Reclamación</option>
-                <option value="peticion">Petición</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Texto</label>
-            <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+<div id="contenedor" class="container mt-5">
+    <hr><br><br>
+    <div class="login-container max-w-md mx-auto my-10 p-8 border rounded shadow bg-gray-400 border-black">
+        <h2>Formulario de Reclamación/Petición</h2>
+        <form [formGroup]="reclamacionForm" (ngSubmit)="enviarReclamacion()" class="form-group">
+            <div class="mb-3">
+                <label for="nombre" class="form-label block text-sm font-medium text-gray-700">Nombre:</label>
+                <input type="text" id="nombre" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="nombre">
+            </div>
+            <div class="mb-3">
+                <label for="apellidos" class="form-label block text-sm font-medium text-gray-700">Apellidos:</label>
+                <input type="text" id="apellidos" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="apellidos">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label block text-sm font-medium text-gray-700">Email:</label>
+                <input type="email" id="email" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="email">
+            </div>
+            <div class="mb-3">
+                <label for="tipo" class="form-label block text-sm font-medium text-gray-700">Tipo:</label>
+                <select id="tipo" class="form-select mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="tipo">
+                    <option value="reclamacion">Reclamación</option>
+                    <option value="peticion">Petición</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label block text-sm font-medium text-gray-700">Texto:</label>
+                <textarea id="descripcion" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" formControlName="descripcion"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary submit-button w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Enviar</button>
+        </form>
+    </div>
 </div>
 
 

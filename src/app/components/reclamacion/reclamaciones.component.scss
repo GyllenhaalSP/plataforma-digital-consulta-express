@@ -1,8 +1,11 @@
+#contenedor {
+    margin: auto;
+}
+
 h2 {
     font-weight: bold;
     color: dimgrey;
     text-shadow: 1px 1px 2px white;
-    font-size: 200%;
     text-align: center;
 }
 
@@ -11,7 +14,7 @@ label {
     text-shadow: 1px 1px 2px white;
 }
 
-input {
+input, textarea, select, option {
     color: black;
     background-color: lightgray;
     text-align: center;
@@ -22,34 +25,4 @@ input::placeholder {
     color: black;
     text-align: left;
     font-weight: lighter;
-}
-
-div > div {
-    text-align: center;
-    color: grey;
-    text-shadow: 0 1px 1px dimgrey;
-    border: solid red 1px;
-    border-radius: 5px;
-    background-color: lightgray;
-}
-
-button {
-    color: lightgray;
-    text-shadow: 1px 1px 1px dimgrey;
-}
-
-button:hover {
-    color: whitesmoke;
-    text-shadow: 1px 1px 1px black;
-}
-
-div > p {
-    color: rgb(55, 65, 81);
-    text-shadow: 1px 1px 2px white;
-}
-
-p {
-    text-align: center;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px white;
 }
