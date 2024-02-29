@@ -1,10 +1,13 @@
 <div>
     <h2>Información Completa del Sistema</h2>
+    <br><hr><br><br>
     <section>
+        <hr class="medio">
         <h3>Usuarios</h3>
+        <hr class="medio"><br>
         <table class="table">
             <thead>
-            <tr>
+            <tr class="primero">
                 <th>DNI</th>
                 <th>Nombre</th>
                 <th>Apellidos</th>
@@ -24,10 +27,12 @@
         </table>
     </section>
     <section>
+        <br><hr class="medio">
         <h3>Entidades</h3>
+        <hr class="medio"><br>
         <table class="table">
             <thead>
-            <tr>
+            <tr class="primero">
                 <th>Nombre</th>
                 <th>NIF</th>
                 <th>Email</th>
@@ -43,10 +48,12 @@
         </table>
     </section>
     <section>
+        <br><hr class="medio">
         <h3>Promotores</h3>
+        <hr class="medio"><br>
         <table class="table">
             <thead>
-            <tr>
+            <tr class="primero">
                 <th>Nombre</th>
                 <th>Contacto</th>
             </tr>
@@ -59,8 +66,10 @@
             </tbody>
         </table>
     </section>
+    <br>
+    <hr>
     <section>
         <h3>Cantidad Total de Aportaciones</h3>
-        <p> La cantidad total de aportaciones es de {{ datosCompletos.cantidadTotalAportaciones | currency:'EUR'  }}</p>
+        <p id="aportaciones"> La cantidad total de aportaciones es de<span> {{ datosCompletos.cantidadTotalAportaciones | currency:'EUR'  }}</span></p>
     </section>
 </div>

@@ -5,7 +5,7 @@
 
 #tablero {
     border-collapse: collapse;
-    width: 80%;
+    width: min-content;
 }
 
 #primero {
@@ -45,4 +45,8 @@ h2, h3, h4 {
 #medio {
     width: 20%!important;
     margin-left: 40%!important;
+}
+
+td:hover {
+    font-weight: bold;
 }

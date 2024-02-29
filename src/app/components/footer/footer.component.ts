@@ -15,7 +15,7 @@ import {Component} from '@angular/core';
             text-align: center;
             width: 100%;
             position: relative;
-            bottom: 0;
+            bottom: 0!important;
         }
     `
 })
