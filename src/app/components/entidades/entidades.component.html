@@ -1,11 +1,14 @@
 <div class="container mt-4">
+    <hr>
     <h2>Servicio de consulta de aportaciones</h2>
+    <hr id="medio">
     <h3>Aportaciones en {{authService.getUserData("nombre")}}</h3>
+    <hr><br><br>
     <div *ngFor="let grupo of aportacionesAgrupadas">
         <h4>{{ grupo.mes.toUpperCase() }}</h4>
-        <table class="table table-bordered">
+        <table id="tablero" class="table table-bordered">
             <thead class="thead-dark">
-            <tr>
+            <tr id="primero">
                 <th>Nombre</th>
                 <th>Apellidos</th>
                 <th>Promotor</th>
@@ -21,10 +24,10 @@
                 <td>{{ aportacion.promotor }}</td>
                 <td>{{ aportacion.entidadFinanciera }}</td>
                 <td>{{ aportacion.cantidadTotal }}</td>
+                <td>{{ aportacion.mes }}</td>
                 <td>{{ aportacion.aportacionesMensuales }}</td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-

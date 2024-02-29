@@ -3,8 +3,8 @@ import {Component} from '@angular/core';
 @Component({
     selector: 'app-footer',
     template: `
-        <footer>
-            <p>PDC© 2024 - Todos los derechos reservados</p>
+        <br><footer>
+            <p>PDCE 2024 - Todos los derechos reservados</p>
         </footer>
     `,
     styles: `
@@ -14,7 +14,7 @@ import {Component} from '@angular/core';
             padding: 20px;
             text-align: center;
             width: 100%;
-            position: fixed;
+            position: relative;
             bottom: 0;
         }
     `
