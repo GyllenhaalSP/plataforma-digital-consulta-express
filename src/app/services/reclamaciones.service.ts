@@ -7,11 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ReclamacionesService {
 
-    private baseUrl = '/api/ver-reclamaciones';
-
     constructor(private http: HttpClient) { }
 
     getReclamaciones(): Observable<any[]> {
-        return this.http.get<any[]>(this.baseUrl);
+        return this.http.get<any[]>('/api/ver-reclamaciones');
     }
 }
