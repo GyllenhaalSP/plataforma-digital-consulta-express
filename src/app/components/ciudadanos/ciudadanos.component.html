@@ -1,0 +1,21 @@
+<div class="container mt-4">
+    <h2>Consulta de Aportaciones</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Promotor</th>
+            <th scope="col">Mes</th>
+            <th scope="col">Cantidad Total</th>
+            <th scope="col">Aportaciones Mensuales</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let aportacion of aportaciones">
+            <td>{{ aportacion.promotor }}</td>
+            <td>{{ aportacion.cantidadTotal | currency:'EUR' }}</td>
+            <td>{{ aportacion.aportacionesMensuales | currency:'EUR' }}</td>
+            <td>{{ aportacion.mes }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
