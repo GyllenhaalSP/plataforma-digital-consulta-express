@@ -13,7 +13,11 @@
             } @else if (authService.isPromotor()) {
                 <li><a routerLink="/promotor">Datos Promotor</a></li>
             }
-            <li><a routerLink="/reclamaciones">Reclamaciones y peticiones</a></li>
+            @if (!authService.isAdmin()) {
+                <li><a routerLink="/reclamaciones">Reclamaciones y peticiones</a></li>
+            } @else {
+                <li><a routerLink="/ver-reclamaciones">Ver Reclamaciones</a></li>
+            }
             <li><a (click)="logout()">Cerrar Sesión</a></li>
         }
     </ul>

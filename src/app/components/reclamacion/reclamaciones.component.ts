@@ -15,7 +15,8 @@ export class ReclamacionesComponent {
             nombre: ['', Validators.required],
             apellidos: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            reclamacion: ['', Validators.required],
+            tipo: ['', Validators.required],
+            descripcion: ['', Validators.required],
         });
     }
 

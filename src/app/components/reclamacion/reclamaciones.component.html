@@ -1,6 +1,6 @@
 <div class="container mt-5">
-    <h2>Formulario de Reclamación</h2>
     <hr>
+    <h2>Formulario de Reclamación/Petición</h2>
     <form [formGroup]="reclamacionForm" (ngSubmit)="enviarReclamacion()">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
@@ -15,10 +15,18 @@
             <input type="email" id="email" class="form-control" formControlName="email">
         </div>
         <div class="mb-3">
-            <label for="reclamacion" class="form-label">Reclamación</label>
-            <textarea id="reclamacion" class="form-control" formControlName="reclamacion"></textarea>
+            <label for="tipo" class="form-label">Tipo</label>
+            <select id="tipo" class="form-select" formControlName="tipo">
+                <option value="reclamacion">Reclamación</option>
+                <option value="peticion">Petición</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Texto</label>
+            <textarea id="descripcion" class="form-control" formControlName="descripcion"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
+
 
