@@ -189,21 +189,6 @@ app.get('/api/reclamaciones', async (req, res) => {
     }
 });
 
-app.put('/api/reclamaciones/:id', async (req, res) => {
-    const { estado } = req.body;
-
-    try {
-        const reclamacionActualizada = await Reclamacion.findByIdAndUpdate(req.params.id, { estado }, { new: true });
-        if (!reclamacionActualizada) {
-            return res.status(404).send({ mensaje: 'Reclamación/Petición no encontrada' });
-        }
-        res.status(200).send({ mensaje: 'Reclamación/Petición actualizada exitosamente', reclamacionActualizada });
-    } catch (error) {
-        res.status(500).send({ mensaje: 'Error al actualizar la reclamación/petición', error });
-    }
-});
-
-
 app.post('/api/reclamaciones', async (req, res) => {
     const { nombreUsuario, emailUsuario, tipo, descripcion } = req.body;
 

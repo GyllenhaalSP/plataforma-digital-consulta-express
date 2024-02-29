@@ -39,7 +39,7 @@ const reclamacionSchemaMongo = new mongoose.Schema({
     emailUsuario: { type: String, required: true },
     tipo: { type: String, required: true, enum: ['Reclamación', 'Petición'] },
     descripcion: { type: String, required: true },
-    estado: { type: String, required: true, enum: ['Pendiente', 'En Proceso', 'Resuelta'] },
+    estado: { type: String, required: true, enum: ['Pendiente', 'En Proceso', 'Resuelta'], default: 'Pendiente'},
     fechaCreacion: { type: Date, default: Date.now },
     fechaActualizacion: { type: Date, default: Date.now }
 });
