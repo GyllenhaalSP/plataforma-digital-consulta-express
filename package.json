@@ -8,7 +8,7 @@
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "dev": "nodemon server.js",
-        "insertDb": "node insertDb.js"
+        "insertDb": "node insertsDB.js"
     },
     "private": true,
     "dependencies": {

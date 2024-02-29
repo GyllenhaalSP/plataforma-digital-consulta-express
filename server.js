@@ -250,6 +250,8 @@ app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
                 .filter((validationResult) => validationResult.error != null)
                 .map((validationResult) => validationResult.error.details[0].message);
 
+            console.log(validationErrors);
+
             if (validationErrors.length > 0) {
                 return res.status(400).send({errors: validationErrors});
             }
