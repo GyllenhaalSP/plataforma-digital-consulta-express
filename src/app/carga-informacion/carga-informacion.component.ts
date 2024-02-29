@@ -34,7 +34,7 @@ export class CargaInformacionComponent {
                     duration: 3000,
                     panelClass: ['mat-toolbar', 'mat-primary'],
                     horizontalPosition: 'center',
-                    verticalPosition: 'top',
+                    verticalPosition: 'bottom',
                 });
             },
             error: (error) => {
