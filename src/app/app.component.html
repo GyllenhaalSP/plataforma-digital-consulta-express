@@ -18,10 +18,20 @@
 <hr class="mb-5">
 
 @if (authService.getUserData('role') === 'user'){
-    <div>
-        <p>Bienvenido a la página principal de los ciudadanos de la Plataforma Digital de Consulta Express.</p>
-        <p>Como ciudadano, puedes acceder a tus aportaciones y a los datos que figuren bajo tu dominio siguiendo los links de la barra de navegación superior.</p>
-        <p>Si tienes alguna duda o necesitas ayuda, por favor, contacta con el administrador de la plataforma.</p>
+    <div id="tres" class="text-[16px]">
+        <p>¡Bienvenido a la página principal de Consulta Express!</p>
+        <br>
+        <p>En esta plataforma, tendrás acceso directo a tus movimientos y transacciones financieras de manera rápida y sencilla. Utiliza la barra de navegación en la parte superior para explorar y gestionar tus datos de forma eficiente.</p>
+        <br>
+        <p>Diseñamos esta plataforma pensando en ti, para brindarte una experiencia intuitiva y segura. Si en algún momento necesitas ayuda o tienes alguna pregunta, no dudes en contactar con nuestro equipo de soporte. Estamos aquí para ayudarte a sacar el máximo provecho de todas las funciones que ofrecemos.</p>
+        <br>
+        <p>Gracias por confiar en nosotros como tu plataforma de consulta financiera. Nos comprometemos a proporcionarte las herramientas necesarias para que puedas administrar tus finanzas de manera efectiva y mejorar tu experiencia bancaria.</p>
+        <br>
+        <p>¡Explora, gestiona y maximiza el potencial de tu información con Consulta Express!</p>
+        <br><br>
+        <hr>
+        <br><br>
+        <p>Para más información, términos y condiciones completos, así como políticas de privacidad, visita nuestro sitio web o ponte en contacto con nuestro equipo de atención al cliente. Las ofertas y servicios están sujetos a cambios sin previo aviso. Se aplican restricciones. Los productos financieros están sujetos a aprobación y disponibilidad. Consulta con un asesor financiero antes de tomar decisiones importantes. Todas las transacciones están sujetas a las leyes y regulaciones locales. Se pueden aplicar cargos por uso de servicios adicionales. ©2024 Todos los derechos reservados.</p>
     </div>
 }@else if (authService.getUserData('role') === 'promotor'){
     <p>Como promotor, puedes <a routerLink="/promotor">acceder al panel de promotor</a>.</p>
