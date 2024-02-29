@@ -1,0 +1,66 @@
+* {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.table {
+    border-collapse: collapse;
+    width: min-content;
+}
+
+.primero {
+    background-color: dimgray!important;
+    border: solid 1px black;
+    text-align: center;
+    text-shadow: 1px 1px 2px antiquewhite;
+}
+
+.table tr:nth-child(2n) {
+    background-color: dimgray;
+    border: solid 1px black;
+    text-align: center;
+}
+
+.table tr:nth-child(2n+1) {
+    background-color: grey;
+    border: solid 1px black;
+    text-align: center;
+}
+
+.table tr td {
+    min-height: 20px;
+    padding: 15px;
+}
+
+h2, h3, h4 {
+    color: dimgrey;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 200%;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 1rem;
+    text-shadow: 1px 1px 2px white;
+}
+
+#aportaciones {
+    color: dimgrey;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 200%;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 1rem;
+    text-shadow: 1px 1px 2px white;
+}
+
+span {
+    color: green;
+}
+
+.medio {
+    width: 20%!important;
+    margin-left: 40%!important;
+}
+
+td:hover {
+    font-weight: bold;
+}
