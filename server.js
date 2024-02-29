@@ -190,21 +190,24 @@ app.get('/api/reclamaciones', async (req, res) => {
 });
 
 app.post('/api/reclamaciones', async (req, res) => {
-    const { nombreUsuario, emailUsuario, tipo, descripcion } = req.body;
+    const { nombre, apellidos, email, tipo, descripcion } = req.body;
 
     const nuevaReclamacion = new Reclamacion({
-        nombreUsuario,
-        emailUsuario,
+        nombre,
+        apellidos,
+        email,
         tipo,
         descripcion,
-        estado: 'Pendiente'
     });
+
+    console.log(nuevaReclamacion);
 
     try {
         await nuevaReclamacion.save();
         res.status(201).send({ mensaje: 'Reclamación/Petición creada exitosamente' });
     } catch (error) {
-        res.status(400).send({ mensaje: 'Error al crear la reclamación/petición', error });
+        console.error("Error al intentar crear la reclamación/petición:", error);
+        res.status(400).send({ mensaje: "Error al crear la reclamación/petición", error: error.message });
     }
 });
 

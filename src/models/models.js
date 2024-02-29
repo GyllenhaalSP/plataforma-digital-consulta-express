@@ -35,9 +35,10 @@ const aportacionSchemaMongo = new mongoose.Schema({
 });
 
 const reclamacionSchemaMongo = new mongoose.Schema({
-    nombreUsuario: { type: String, required: true },
-    emailUsuario: { type: String, required: true },
-    tipo: { type: String, required: true, enum: ['Reclamación', 'Petición'] },
+    nombre: { type: String, required: true },
+    apellidos: { type: String, required: true },
+    email: { type: String, required: true },
+    tipo: { type: String, required: true, enum: ['reclamacion', 'peticion'] },
     descripcion: { type: String, required: true },
     estado: { type: String, required: true, enum: ['Pendiente', 'En Proceso', 'Resuelta'], default: 'Pendiente'},
     fechaCreacion: { type: Date, default: Date.now },
