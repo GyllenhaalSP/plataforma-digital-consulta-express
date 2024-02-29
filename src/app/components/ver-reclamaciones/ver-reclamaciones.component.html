@@ -1,7 +1,9 @@
 <div *ngIf="reclamaciones.length; else noReclamaciones" class="container mt-3">
+    <br><hr>
     <h2>Reclamaciones</h2>
+    <hr><br>
     <div class="row">
-        <div class="col-md-4" *ngFor="let reclamacion of reclamaciones">
+        <div class="col-md-4 div" *ngFor="let reclamacion of reclamaciones">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">{{ reclamacion.nombre }} {{reclamacion.apellidos}}</h5>
