@@ -1,7 +1,7 @@
 <app-nav />
 
 @if (!authService.isLoggedIn()){
-    <p>Por favor, <a routerLink="/register">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
+    <p>Por favor, <a routerLink="/registro">regístrate</a> o <a routerLink="/login">inicia sesión</a> para ver el contenido.</p>
 } @else {
     <div class="flex place-content-end mr-5 text-[24px]">
         <p>Bienvenido, {{ authService.getUserData('nombre')}}</p>
