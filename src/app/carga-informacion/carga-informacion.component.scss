@@ -20,7 +20,7 @@ h2, h3{
     font-weight: bold;
 }
 
-button {
+button, input {
     font-weight: normal;
     padding: 10px 20px;
     background-color: dimgray;
@@ -31,12 +31,25 @@ button {
     cursor: pointer;
 }
 
+#file-upload-button {
+    color: red!important;
+}
+
 button:hover {
     color: dimgray;
     text-shadow: 1px 1px 2px white;
 }
 
 button:active {
+    background-color: darkgray;
+}
+
+input:hover {
+    color: dimgray;
+    text-shadow: 1px 1px 2px white;
+}
+
+input:active {
     background-color: darkgray;
 }
 
