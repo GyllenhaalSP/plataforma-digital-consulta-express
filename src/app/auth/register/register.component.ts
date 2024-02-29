@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 export function dniValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
         const value = control.value;
+        if (value === 'admin') return null;
         const dniRegex = /^[XYZ]?\d{7,8}[A-HJ-NP-TV-Z]$/i;
         const nifRegex = /^[A-HJ-NP-W][0-9]{7}[A-J0-9]$/i;
         const nifResult = nifRegex.test(value);

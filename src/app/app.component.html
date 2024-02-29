@@ -18,7 +18,11 @@
 <hr class="mb-5">
 
 @if (authService.getUserData('role') === 'user'){
-    <p>Como usuario, puedes <a routerLink="/user">acceder al panel de usuario</a>.</p>
+    <div>
+        <p>Bienvenido a la página principal de los ciudadanos de la Plataforma Digital de Consulta Express.</p>
+        <p>Como ciudadano, puedes acceder a tus aportaciones y a los datos que figuren bajo tu dominio siguiendo los links de la barra de navegación superior.</p>
+        <p>Si tienes alguna duda o necesitas ayuda, por favor, contacta con el administrador de la plataforma.</p>
+    </div>
 }@else if (authService.getUserData('role') === 'promotor'){
     <p>Como promotor, puedes <a routerLink="/promotor">acceder al panel de promotor</a>.</p>
 }@else if (authService.getUserData('role') === 'entidad'){

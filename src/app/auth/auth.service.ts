@@ -48,7 +48,7 @@ export class AuthService {
     }
 
     isUsuario(): boolean {
-        return this.getUserData('role') === 'usuario';
+        return this.getUserData('role') === 'user';
     }
 
     isProveedor(): boolean {

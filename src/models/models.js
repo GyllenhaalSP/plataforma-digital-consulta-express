@@ -24,6 +24,7 @@ const EntidadSchemaMongo = new mongoose.Schema({
 const aportacionSchemaMongo = new mongoose.Schema({
     nombre: {type: String, required: true},
     apellidos: {type: String, required: true},
+    dni: {type: String, required: true},
     promotor: {type: String, required: true},
     entidadFinanciera: {type: String, required: true},
     cantidadTotal: {type: Number, required: true},

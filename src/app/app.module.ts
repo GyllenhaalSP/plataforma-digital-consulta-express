@@ -12,6 +12,9 @@ import {FooterComponent} from './components/footer/footer.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { EntidadesComponent } from './components/entidades/entidades.component';
 import { BienvenidaComponent } from './components/bienvenida/bienvenida.component';
+import { CiudadanosComponent } from './components/ciudadanos/ciudadanos.component';
+import { PromotoresComponent } from './components/promotores/promotores.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
     declarations: [
@@ -21,6 +24,9 @@ import { BienvenidaComponent } from './components/bienvenida/bienvenida.componen
         FooterComponent,
         EntidadesComponent,
         BienvenidaComponent,
+        CiudadanosComponent,
+        PromotoresComponent,
+        AdminComponent,
     ],
     imports: [
         BrowserModule,

@@ -27,6 +27,7 @@ const userSchema = Joi.object({
 const aportacionSchema = Joi.object({
     nombre: Joi.string().required(),
     apellidos: Joi.string().required(),
+    dni: Joi.string().required(),
     promotor: Joi.string().required(),
     entidadFinanciera: Joi.string().required(),
     cantidadTotal: Joi.number().required(),
@@ -50,12 +51,42 @@ app.get('/acceso-denegado', (req, res) => {
 
 app.get('/api/entidades/:nombreEntidad', async (req, res) => {
     const nombreEntidad = req.params.nombreEntidad;
+    console.log("nombre: ", nombreEntidad);
 
     try {
         const aportaciones = await Aportacion.find({ entidadFinanciera: nombreEntidad }, null, null);
+        console.log(aportaciones);
         res.json(aportaciones);
     } catch (error) {
         res.status(500).send({ message: "Error al obtener las aportaciones", error: error.message });
+    }
+});
+
+app.get('/api/ciudadanos/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log(id);
+
+        const aportaciones = await Aportacion.find({ dni: id }, null, null);
+        console.log(aportaciones);
+        res.json(aportaciones);
+
+    } catch (error) {
+        console.error('Error al obtener las aportaciones para el ciudadano:', error);
+        res.status(500).send({ message: 'Error al obtener las aportaciones' });
+    }
+});
+
+app.get('/api/promotores/:id', async (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const aportaciones = await Aportacion.find({ promotor: id }, null, null);
+        console.log(aportaciones);
+        res.json(aportaciones);
+    } catch (error) {
+        console.error("Error al obtener aportaciones por promotor:", error);
+        res.status(500).send("Error al obtener las aportaciones por promotor");
     }
 });
 
@@ -146,6 +177,7 @@ app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
             const aportacionesToInsert = results.map((result) => ({
                 nombre: result.nombre,
                 apellidos: result.apellidos,
+                dni: result.dni,
                 promotor: result.promotor,
                 entidadFinanciera: result.entidadFinanciera,
                 cantidadTotal: result.cantidadTotal,

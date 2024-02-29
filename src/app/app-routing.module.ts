@@ -3,6 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {CargaInformacionComponent} from './carga-informacion/carga-informacion.component';
 import {hasRoleGuard} from './auth/auth.guard';
 import {EntidadesComponent} from './components/entidades/entidades.component';
+import {CiudadanosComponent} from './components/ciudadanos/ciudadanos.component';
+import {PromotoresComponent} from './components/promotores/promotores.component';
+import {AdminComponent} from './components/admin/admin.component';
 
 const routes: Routes = [
     {
@@ -16,8 +19,23 @@ const routes: Routes = [
     },
     {
         path: 'entidad',
-/*        canActivate: [hasRoleGuard(['entidad'])],*/
+        canActivate: [hasRoleGuard(['entidad'])],
         component: EntidadesComponent
+    },
+    {
+        path: 'ciudadano',
+        canActivate: [hasRoleGuard(['user'])],
+        component: CiudadanosComponent
+    },
+    {
+        path: 'promotor',
+        canActivate: [hasRoleGuard(['promotor'])],
+        component: PromotoresComponent
+    },
+    {
+        path: 'admin',
+        canActivate: [hasRoleGuard(['admin'])],
+        component: AdminComponent
     }
 ];
 
