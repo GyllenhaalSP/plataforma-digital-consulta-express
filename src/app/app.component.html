@@ -6,9 +6,6 @@
     <div class="flex place-content-end mr-5 text-[24px]">
         <p>Bienvenido, {{ authService.getUserData('nombre')}}</p>
     </div>
-    @if (authService.getUserData('role') === 'admin'){
-        <p>Como administrador, puedes <a routerLink="/admin">acceder al panel de administración</a>.</p>
-    }
 }
 
 <h1>
@@ -16,6 +13,10 @@
 </h1>
 
 <hr class="mb-5">
+
+@if (authService.getUserData('role') === 'admin'){
+    <app-admin />
+}
 
 @if (authService.getUserData('role') === 'user'){
     <div id="tres" class="text-[16px]">

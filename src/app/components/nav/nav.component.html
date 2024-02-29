@@ -5,16 +5,15 @@
             <li><a routerLink="/login">Iniciar Sesión</a></li>
             <li><a routerLink="/registro">Registro</a></li>
         } @else {
-            @if (authService.isAdmin()) {
-                <li><a routerLink="/admin">Admin</a></li>
-            } @else if (authService.isEntidad()) {
+            @if (authService.isEntidad()) {
                 <li><a routerLink="/entidad">Datos Entidad</a></li>
                 <li><a routerLink="/carga-info">Cargar info</a></li>
             } @else if (authService.isUsuario()) {
-                <li><a routerLink="/ciudadano">Datos ciudadano</a></li>
-            } @else if (authService.isProveedor()) {
-                <li><a routerLink="/proveedor">Proveedor</a></li>
+                <li><a routerLink="/ciudadano">Datos Ciudadano</a></li>
+            } @else if (authService.isPromotor()) {
+                <li><a routerLink="/promotor">Datos Promotor</a></li>
             }
+            <li><a routerLink="/reclamaciones">Reclamaciones y peticiones</a></li>
             <li><a (click)="logout()">Cerrar Sesión</a></li>
         }
     </ul>

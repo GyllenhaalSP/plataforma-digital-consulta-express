@@ -1,1 +1,67 @@
-<p>admin works!</p>
+<div>
+    <h2>Información Completa del Sistema</h2>
+    <section>
+        <h3>Usuarios</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <!-- Añade más columnas según sea necesario -->
+            </tr>
+            </thead>
+            <tbody>
+                @for (usuario of datosCompletos.usuarios; track datosCompletos.usuarios.id){
+                    <tr>
+                        <td>{{ usuario.dni }}</td>
+                        <td>{{ usuario.nombre }}</td>
+                        <td>{{ usuario.apellidos }}</td>
+                        <td>{{ usuario.email }}</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h3>Entidades</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>NIF</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let entidad of datosCompletos.entidades">
+                <td>{{ entidad.nombre }}</td>
+                <td>{{ entidad.NIF }}</td>
+                <td>{{ entidad.email }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h3>Promotores</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Contacto</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let promotor of datosCompletos.promotores">
+                <td>{{ promotor.nombre }}</td>
+                <td>{{ promotor.email }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section>
+        <h3>Cantidad Total de Aportaciones</h3>
+        <p> La cantidad total de aportaciones es de {{ datosCompletos.cantidadTotalAportaciones | currency:'EUR'  }}</p>
+    </section>
+</div>

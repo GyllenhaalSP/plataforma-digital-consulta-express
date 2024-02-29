@@ -8,7 +8,7 @@ const Joi = require('joi');
 const multer = require('multer');
 const csvParser = require('csv-parser');
 const fs = require('fs');
-const {User, Aportacion, Entidad} = require("./src/models/models");
+const {User, Aportacion, Entidad, Reclamacion} = require("./src/models/models");
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -159,6 +159,70 @@ app.post('/api/login', async (req, res) => {
     const token = jwt.sign(payload, 'clave-macro-secreta', { expiresIn: '24h' });
     res.send({ token });
 });
+
+app.get('/api/admin/datos-completos', async (req, res) => {
+    try {
+        const usuarios = await User.find({role: 'user'}, null, null);
+        const entidades = await Entidad.find({}, null, null);
+        const promotores = await User.find({ role: 'promotor' }, null, null);
+        const aportaciones = await Aportacion.find(null, null, null);
+        const cantidadTotalAportaciones = aportaciones.reduce((total, aportacion) => total + aportacion.cantidadTotal, 0);
+
+        res.json({
+            usuarios,
+            entidades,
+            promotores,
+            cantidadTotalAportaciones
+        });
+    } catch (error) {
+        console.error('Error al obtener los datos completos:', error);
+        res.status(500).send({ message: 'Error al obtener los datos completos' });
+    }
+});
+
+app.get('/api/reclamaciones', async (req, res) => {
+    try {
+        const reclamaciones = await Reclamacion.find({}, null, null);
+        res.status(200).json(reclamaciones);
+    } catch (error) {
+        res.status(500).send({ mensaje: 'Error al obtener las reclamaciones/peticiones', error });
+    }
+});
+
+app.put('/api/reclamaciones/:id', async (req, res) => {
+    const { estado } = req.body;
+
+    try {
+        const reclamacionActualizada = await Reclamacion.findByIdAndUpdate(req.params.id, { estado }, { new: true });
+        if (!reclamacionActualizada) {
+            return res.status(404).send({ mensaje: 'Reclamación/Petición no encontrada' });
+        }
+        res.status(200).send({ mensaje: 'Reclamación/Petición actualizada exitosamente', reclamacionActualizada });
+    } catch (error) {
+        res.status(500).send({ mensaje: 'Error al actualizar la reclamación/petición', error });
+    }
+});
+
+
+app.post('/api/reclamaciones', async (req, res) => {
+    const { nombreUsuario, emailUsuario, tipo, descripcion } = req.body;
+
+    const nuevaReclamacion = new Reclamacion({
+        nombreUsuario,
+        emailUsuario,
+        tipo,
+        descripcion,
+        estado: 'Pendiente'
+    });
+
+    try {
+        await nuevaReclamacion.save();
+        res.status(201).send({ mensaje: 'Reclamación/Petición creada exitosamente' });
+    } catch (error) {
+        res.status(400).send({ mensaje: 'Error al crear la reclamación/petición', error });
+    }
+});
+
 
 app.post('/api/cargar-informacion', upload.single('file'), (req, res) => {
     let results = [];

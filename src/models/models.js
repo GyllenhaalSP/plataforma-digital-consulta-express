@@ -34,6 +34,17 @@ const aportacionSchemaMongo = new mongoose.Schema({
     estado: {type: String, required: true}
 });
 
+const reclamacionSchemaMongo = new mongoose.Schema({
+    nombreUsuario: { type: String, required: true },
+    emailUsuario: { type: String, required: true },
+    tipo: { type: String, required: true, enum: ['Reclamación', 'Petición'] },
+    descripcion: { type: String, required: true },
+    estado: { type: String, required: true, enum: ['Pendiente', 'En Proceso', 'Resuelta'] },
+    fechaCreacion: { type: Date, default: Date.now },
+    fechaActualizacion: { type: Date, default: Date.now }
+});
+
+module.exports.Reclamacion = mongoose.model('Reclamacion', reclamacionSchemaMongo, 'reclamaciones');
 module.exports.User = mongoose.model('User', userSchemaMongo, 'users');
 module.exports.Entidad = mongoose.model('Entidad', EntidadSchemaMongo, 'entidades');
 module.exports.Aportacion = mongoose.model('Aportacion', aportacionSchemaMongo, 'aportaciones');

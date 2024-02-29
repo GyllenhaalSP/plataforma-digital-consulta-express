@@ -15,6 +15,7 @@ import { BienvenidaComponent } from './components/bienvenida/bienvenida.componen
 import { CiudadanosComponent } from './components/ciudadanos/ciudadanos.component';
 import { PromotoresComponent } from './components/promotores/promotores.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { ReclamacionesComponent } from './components/reclamacion/reclamaciones.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { AdminComponent } from './components/admin/admin.component';
         CiudadanosComponent,
         PromotoresComponent,
         AdminComponent,
+        ReclamacionesComponent,
     ],
     imports: [
         BrowserModule,

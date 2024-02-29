@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminService {
     constructor(private http: HttpClient) {}
 
-    obtenerTodosLosDatos(): Observable<any> {
-        return this.http.get<any>('/api/admin/datos');
+    obtenerDatosCompletos(): Observable<any> {
+        return this.http.get<any>('/api/admin/datos-completos');
     }
 }

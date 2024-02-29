@@ -7,13 +7,14 @@ import { AdminService } from '../../services/admin.service';
     styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-    todosLosDatos: any;
+    datosCompletos: any = {};
 
     constructor(private adminService: AdminService) {}
 
     ngOnInit(): void {
-        this.adminService.obtenerTodosLosDatos().subscribe(datos => {
-            this.todosLosDatos = datos;
+        this.adminService.obtenerDatosCompletos().subscribe(datos => {
+            this.datosCompletos = datos;
         });
     }
+
 }
