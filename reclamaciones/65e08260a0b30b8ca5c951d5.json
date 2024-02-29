@@ -1,0 +1,12 @@
+{
+  "nombre": "Juan",
+  "apellidos": "Pérez López",
+  "email": "juan.perez@example.com",
+  "tipo": "peticion",
+  "descripcion": "A ver si mejoran la accesibilidad, ¡Hombre ya!",
+  "estado": "Pendiente",
+  "_id": "65e08260a0b30b8ca5c951d5",
+  "fechaCreacion": "2024-02-29T13:10:56.216Z",
+  "fechaActualizacion": "2024-02-29T13:10:56.216Z",
+  "__v": 0
+}

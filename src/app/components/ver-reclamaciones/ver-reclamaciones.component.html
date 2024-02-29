@@ -1,11 +1,24 @@
-<div *ngIf="reclamaciones.length; else noReclamaciones">
+<div *ngIf="reclamaciones.length; else noReclamaciones" class="container mt-3">
     <h2>Reclamaciones</h2>
-    <ul>
-        <li *ngFor="let reclamacion of reclamaciones">
-            {{ reclamacion | json }}
-        </li>
-    </ul>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let reclamacion of reclamaciones">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ reclamacion.nombre }} {{reclamacion.apellidos}}</h5>
+                    <p class="card-text">{{ reclamacion.dni }}</p>
+                    <p class="card-text">{{ reclamacion.tipo === 'reclamacion' ? 'Reclamación' : reclamacion.tipo === 'peticion' ? 'Petición' : 'Sin tipo'}}</p>
+                    <p class="card-text">{{ reclamacion.descripcion || 'No se envió texto' }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">Fecha: {{ reclamacion.fechaCreacion | date:'mediumDate' }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <ng-template #noReclamaciones>
-    <p>No hay reclamaciones para mostrar.</p>
+    <div class="alert alert-warning" role="alert">
+        <h2>No hay reclamaciones para mostrar.</h2>
+    </div>
 </ng-template>
+

@@ -181,7 +181,7 @@ app.get('/api/admin/datos-completos', async (req, res) => {
     }
 });
 
-app.get('/api/ver-reclamaciones', async (req, res) => {
+function verReclamaciones(req, res){
     const dirPath = join(__dirname, 'reclamaciones');
     fs.readdir(dirPath, (err, files) => {
         if (err) {
@@ -195,6 +195,14 @@ app.get('/api/ver-reclamaciones', async (req, res) => {
 
         res.json(reclamaciones);
     });
+}
+
+app.get('/api/ver-reclamaciones', async (req, res) => {
+    verReclamaciones(req, res);
+});
+
+app.get('/api/reclamaciones', async (req, res) => {
+    verReclamaciones(req, res);
 });
 
 app.post('/api/reclamaciones', async (req, res) => {
